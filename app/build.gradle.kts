@@ -14,12 +14,15 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        vectorDrawables.useSupportLibrary = true
     }
+
+    compileOptions.targetCompatibility = JavaVersion.VERSION_1_8
+    compileOptions.sourceCompatibility = JavaVersion.VERSION_1_8
+    kotlinOptions.jvmTarget = "1.8"
+    buildFeatures.compose = true
+    composeOptions.kotlinCompilerExtensionVersion = "1.5.1"
 
     buildTypes {
         release {
@@ -30,19 +33,7 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -51,7 +42,12 @@ android {
 }
 
 dependencies {
-    implementation(libs.compose)
+    implementation(project(path = ":library"))
+
+    //implementation(libs.commons.designsystem)
+    //implementation("com.github.JimmyJGM:DesignSystemLibrary:1.0.0")
+
+    implementation(libs.compose.glide)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -62,6 +58,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
