@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.maven.publish)
+    id("maven-publish")
 }
 
 android {
@@ -43,14 +43,15 @@ android {
     }
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            register<MavenPublication>("release") {
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = "github.com.JimmyJGM"
+            artifactId = "DesignSystemLibrary"
+            version = "1.0.0"
+
+            afterEvaluate {
                 from(components["release"])
-                groupId = "github.com.JimmyJGM"
-                artifactId = "DesignSystemLibrary"
-                version = "1.0.0"
             }
         }
     }
