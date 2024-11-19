@@ -43,6 +43,19 @@ android {
     }
 }
 
+afterEvaluate {
+    publishing {
+        publications {
+            register<MavenPublication>("release") {
+                groupId = "github.com.JimmyJGM"
+                artifactId = "DesignSystemLibrary"
+                version = "1.0.0"
+                from(components["release"])
+            }
+        }
+    }
+}
+
 dependencies {
     implementation(libs.compose.glide)
     implementation(libs.androidx.core.ktx)
