@@ -26,7 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
-import io.jimmyjossue.designsystemlibrary.utils.parseDecoratedAnnotatedString
+import io.jimmyjossue.designsystemlibrary.utils.textdecorator.decoratedAnnotatedString
 
 internal data class DSSnackBarVisuals(
     override val actionLabel: String? = null,
@@ -76,7 +76,7 @@ internal fun screenSnackBar(hostState: SnackbarHostState) = @Composable {
                     }
                     Text(
                         modifier = Modifier.weight(1f),
-                        text = visuals.message.parseDecoratedAnnotatedString(),
+                        text = visuals.message.decoratedAnnotatedString(),
                         style = visuals.sizeType.getTypography(),
                         color = visuals.cardType.getContentColor(),
                         onTextLayout = { textLayout ->

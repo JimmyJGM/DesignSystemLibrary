@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -30,7 +29,8 @@ import io.jimmyjossue.designsystemlibrary.components.separator.DSSpacer
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaHigh
 import io.jimmyjossue.designsystemlibrary.theme.catalog.color
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
-import io.jimmyjossue.designsystemlibrary.theme.typography
+import io.jimmyjossue.designsystemlibrary.theme.catalog.isLuminanceMore
+import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
 import io.jimmyjossue.designsystemlibrary.utils.dsAnimateAlphaState
 import io.jimmyjossue.designsystemlibrary.utils.dsAnimateRotatedState
 import io.jimmyjossue.designsystemlibrary.utils.onClick
@@ -38,6 +38,8 @@ import io.jimmyjossue.designsystemlibrary.utils.onClick
 private val pivotFraction = TransformOrigin(pivotFractionX = 0.55F, pivotFractionY = 0.57F)
 private val progressStrokeWidth = 4.dp
 private val progressSize = 42.dp
+private val colorBlack = Color.Black
+private val colorWhite = Color.White
 
 @Composable
 fun DSLoaderIndeterminateScreen(
@@ -87,16 +89,11 @@ fun DSLoaderIndeterminateScreen(
                 if (!text.isNullOrBlank()) {
                     DSSpacer(size = dimension.large)
                     Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .alpha(alpha = alphaAnimated.value),
-                        style = typography.title,
+                        color = if (backgroundColor.isLuminanceMore) colorBlack else colorWhite,
+                        modifier = Modifier.alpha(alpha = alphaAnimated.value),
                         textAlign = TextAlign.Center,
+                        style = typography.button,
                         text = text,
-                        color = when (backgroundColor.luminance() > 0.5f) {
-                            true -> color.typography
-                            false -> color.onPrimary
-                        }
                     )
                 }
             }

@@ -1,4 +1,4 @@
-package io.jimmyjossue.designsystemlibrary.theme
+package io.jimmyjossue.designsystemlibrary.theme.catalog
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
@@ -19,22 +19,9 @@ data class DSTypography(
 fun header() = TextStyle(fontSize = 36.sp, lineHeight = 44.4.sp, fontWeight = FontWeight.Normal)
 fun titleLarge() = TextStyle(fontSize = 24.sp, lineHeight = 32.sp, fontWeight = FontWeight.Normal)
 fun title() =  TextStyle(fontSize = 18.sp, lineHeight = 22.sp, fontWeight = FontWeight.Normal)
+fun button() = TextStyle(fontSize = 16.sp, lineHeight = 20.sp, fontWeight = FontWeight.Normal)
 fun body() = TextStyle(fontSize = 14.sp, lineHeight = 19.6.sp, fontWeight = FontWeight.Normal)
-
-fun caption(): TextStyle {
-    return TextStyle(
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
-    )
-}
-
-fun button(): TextStyle {
-    return TextStyle(
-        fontSize = 16.sp,
-        lineHeight = 20.sp,
-        fontWeight = FontWeight.Normal,
-    )
-}
+fun caption() = TextStyle(fontWeight = FontWeight.Normal, fontSize = 12.sp)
 
 val TextStyle.bold get() = this.copy(fontWeight = FontWeight.Bold)
 val TextStyle.semiBold get() = this.copy(fontWeight = FontWeight.SemiBold)

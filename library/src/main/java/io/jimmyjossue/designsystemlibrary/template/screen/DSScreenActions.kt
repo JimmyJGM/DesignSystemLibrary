@@ -5,7 +5,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import io.jimmyjossue.designsystemlibrary.components.card.DSCardInfoType
 import io.jimmyjossue.designsystemlibrary.components.card.DSSizeType
@@ -16,7 +18,9 @@ import kotlinx.coroutines.launch
 class DSScreenActions @OptIn(ExperimentalMaterial3Api::class) constructor(
     internal val snackbarHostState: SnackbarHostState,
     internal val coroutineScope: CoroutineScope,
+    internal val keyboardController: SoftwareKeyboardController?,
     internal val scrollBehavior: TopAppBarScrollBehavior,
+    internal val focusManager: FocusManager,
 ) {
     fun showSnack(
         duration: SnackbarDuration = SnackbarDuration.Short,
@@ -44,6 +48,12 @@ class DSScreenActions @OptIn(ExperimentalMaterial3Api::class) constructor(
                 )
             )
         }
+    }
+
+    fun hideKeyboard() {
+        keyboardController?.hide()
+        keyboardController
+        focusManager.clearFocus()
     }
 
 }

@@ -28,8 +28,8 @@ import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
 import io.jimmyjossue.designsystemlibrary.theme.catalog.color
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.theme.catalog.shape
-import io.jimmyjossue.designsystemlibrary.theme.typography
-import io.jimmyjossue.designsystemlibrary.utils.parseDecoratedAnnotatedString
+import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
+import io.jimmyjossue.designsystemlibrary.utils.textdecorator.decoratedAnnotatedString
 
 enum class DSCardInfoType {
     SUCCESS,
@@ -88,7 +88,7 @@ fun DSCardInfo(
             }
             Text(
                 modifier = Modifier.weight(1f),
-                text = message.parseDecoratedAnnotatedString(),
+                text = message.decoratedAnnotatedString(),
                 style = sizeType.getTypography(),
                 color = cardType.getContentColor(),
                 onTextLayout = {

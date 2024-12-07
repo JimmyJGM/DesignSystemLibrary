@@ -26,12 +26,12 @@ import io.jimmyjossue.designsystemlibrary.components.topBar.DSTopBarUtils.getFra
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
 import io.jimmyjossue.designsystemlibrary.theme.catalog.color
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
-import io.jimmyjossue.designsystemlibrary.theme.typography
+import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
 import io.jimmyjossue.designsystemlibrary.utils.FALSE
 import io.jimmyjossue.designsystemlibrary.utils.TRUE
-import io.jimmyjossue.designsystemlibrary.utils.borderBottom
+import io.jimmyjossue.designsystemlibrary.utils.extension.borderBottom
 import io.jimmyjossue.designsystemlibrary.utils.onClick
-import io.jimmyjossue.designsystemlibrary.utils.parseDecoratedAnnotatedString
+import io.jimmyjossue.designsystemlibrary.utils.textdecorator.decoratedAnnotatedString
 import io.jimmyjossue.designsystemlibrary.utils.titleOfApp
 
 data class DSTopBarColors(
@@ -133,7 +133,7 @@ private fun TopBarSubtitle(
         Text(
             style = typography.body,
             color = contentColor.alphaMedium,
-            text = subtitle.parseDecoratedAnnotatedString(),
+            text = subtitle.decoratedAnnotatedString(),
             modifier = Modifier
                 .padding(bottom = dimension.small)
                 .padding(

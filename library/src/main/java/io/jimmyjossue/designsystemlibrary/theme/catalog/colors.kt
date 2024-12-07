@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 
 data class DSColors(
     val onPrimary: Color = Color(0xFFFFFFFF),
@@ -13,7 +14,7 @@ data class DSColors(
     val accent: Color = Color(0xFF585CC1),
     val accentSurface: Color = Color(0xFFC9CBFF),
     val background: Color = Color(0xFFFFFFFF),
-    val surface: Color = Color(0xFFF3F5F5),
+    val surface: Color = Color(0xFFF4F4F5),
     val surfaceDark: Color = Color(0xFFCFD2D2),
     val typography: Color = Color(0xFF060708),
     val typographyDisabled: Color = Color(0xFF55585E),
@@ -40,3 +41,5 @@ val Color.alphaMedium get() = this.copy(alpha = 0.50f)
 val Color.alphaSemiLow get() = this.copy(alpha = 0.35f)
 val Color.alphaLow get() = this.copy(alpha = 0.15f)
 val Color.alphaLower get() = this.copy(alpha = 0.07f)
+
+val Color.isLuminanceMore get() = this.luminance() > 0.5f

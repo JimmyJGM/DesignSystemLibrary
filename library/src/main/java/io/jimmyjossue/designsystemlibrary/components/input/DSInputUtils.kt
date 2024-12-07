@@ -1,7 +1,6 @@
 package io.jimmyjossue.designsystemlibrary.components.input
 
 import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
@@ -13,7 +12,7 @@ import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaSemiLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.color
-import io.jimmyjossue.designsystemlibrary.theme.typography
+import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
 
 object DSInputUtils {
 
@@ -33,7 +32,7 @@ object DSInputUtils {
         textSelectionColors = TextSelectionColors(handleColor = typography.alphaLow, backgroundColor = accent),
 
         focusedIndicatorColor = primary,
-        unfocusedIndicatorColor = typography.alphaHigh,
+        unfocusedIndicatorColor = typography.alphaLow,
         disabledIndicatorColor = typography.alphaSemiLow,
         errorIndicatorColor = error,
 
@@ -74,7 +73,7 @@ object DSInputUtils {
     )
 
     @Composable
-    fun getInputTextColors(
+    fun getInputColors(
         background: Color = color.background,
         typography: Color = color.typography,
         primary: Color = color.primary,
@@ -92,14 +91,12 @@ object DSInputUtils {
         modifier: Modifier = Modifier,
         text: String? = null,
         textStyle: TextStyle,
-        color: Color,
     ): (@Composable () -> Unit)? = text?.let {
         {
             Text(
                 modifier = modifier,
                 text = text,
                 style = textStyle,
-                color = color,
             )
         }
     }
@@ -110,7 +107,6 @@ object DSInputUtils {
     ) = text(
         text = text,
         textStyle = typography.body,
-        color = LocalContentColor.current,
     )
 
     @Composable
@@ -121,7 +117,6 @@ object DSInputUtils {
         modifier = modifier,
         text = text,
         textStyle = typography.caption,
-        color = LocalContentColor.current.alphaHigh,
     )
 
 }

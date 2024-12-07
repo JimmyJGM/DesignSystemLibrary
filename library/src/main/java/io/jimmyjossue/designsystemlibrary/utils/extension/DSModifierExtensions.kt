@@ -1,4 +1,4 @@
-package io.jimmyjossue.designsystemlibrary.utils
+package io.jimmyjossue.designsystemlibrary.utils.extension
 
 import android.annotation.SuppressLint
 import androidx.compose.ui.Modifier
@@ -21,6 +21,22 @@ fun Modifier.borderBottom(
             color = color,
             start = Offset(0f, y),
             end = Offset(size.width, y),
+            strokeWidth = strokeWidth
+        )
+    }
+}
+
+@SuppressLint("UnnecessaryComposedModifier")
+fun Modifier.borderTop(
+    color: Color,
+    width: Dp = 1.dp,
+): Modifier = composed {
+    drawBehind {
+        val strokeWidth = width.value * density
+        drawLine(
+            color = color,
+            start = Offset(0f, 0f),
+            end = Offset(size.width, 0f),
             strokeWidth = strokeWidth
         )
     }

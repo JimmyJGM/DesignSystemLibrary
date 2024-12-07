@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -22,16 +23,41 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.jimmyjossue.designsystemlibrary.components.button.DSButtonPrimary
+import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaHigh
+import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
+import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaSemiLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.color
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.utils.onClick
 
 @Composable
-internal fun DSToggleSwitch(
-    isSelected: Boolean = false,
+fun DSToggleSwitch(
     size: Dp = 24.dp,
     isEnabled: Boolean = true,
+    onChangeSelected: (Boolean) -> Unit
+) {
+    val isSelected = rememberSaveable { mutableStateOf(false) }
+    DSToggleSwitch(
+        isSelected = isSelected.value,
+        isEnabled = isEnabled,
+        size = size,
+        onClick = {
+            isSelected.value = isSelected.value.not()
+            onChangeSelected(isSelected.value)
+        }
+    )
+}
+
+@Composable
+fun DSToggleSwitch(
+    isSelected: Boolean,
+    size: Dp = 24.dp,
+    isEnabled: Boolean = true,
+    colorPrimary: Color = color.primary,
+    colorPrimaryDisabled: Color =  color.primaryDisabled,
+    colorSurface: Color =  color.surfaceDark,
+    colorOnPrimary: Color = color.onPrimary,
     onClick: () -> Unit
 ) {
     val width = (size.value * 1.7F).dp
@@ -44,15 +70,14 @@ internal fun DSToggleSwitch(
     )
 
     val iconColor = when (isEnabled) {
-        true -> if (isSelected) color.primarySurface else color.onPrimary
-        false -> if (isSelected) color.surface.alphaMedium else color.onPrimary.alphaMedium
+        true -> if (isSelected) colorOnPrimary.alphaHigh else colorOnPrimary
+        false -> if (isSelected) colorOnPrimary.alphaLow else colorOnPrimary.alphaSemiLow
     }
 
     val backgroundColor = when (isEnabled) {
-        true -> if (isSelected) color.primary else color.surfaceDark
-        false -> if (isSelected) color.primaryDisabled else color.surfaceDark
+        true -> if (isSelected) colorPrimary else colorSurface
+        false -> if (isSelected) colorPrimaryDisabled.alphaMedium else colorPrimaryDisabled.alphaMedium
     }
-
 
     Box(
         modifier = Modifier
@@ -64,7 +89,7 @@ internal fun DSToggleSwitch(
         Box(
             modifier = Modifier
                 .size(size)
-                .offset(x = offset, y = 0.dp)
+                .offset(x = offset)
                 .padding(all = borderWidth)
                 .clip(shape = CircleShape)
                 .background(color = iconColor),

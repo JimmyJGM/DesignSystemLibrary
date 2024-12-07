@@ -21,7 +21,7 @@ import io.jimmyjossue.designsystemlibrary.components.input.DSInputUtils.toInputC
 import io.jimmyjossue.designsystemlibrary.components.separator.DSSpacer
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.theme.catalog.shape
-import io.jimmyjossue.designsystemlibrary.theme.typography
+import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
 
 data class DSInputColors(
     val background: Color,
@@ -48,7 +48,7 @@ fun DSInputText(
     isError: Boolean = false,
     shapeInput: Shape = shape.small,
     config: DSInputConfig = DSInputConfig(),
-    colors: DSInputColors = DSInputUtils.getInputTextColors(),
+    colors: DSInputColors = DSInputUtils.getInputColors(),
     onChangeValue: (String) -> Unit,
 ) {
     CompositionLocalProvider(

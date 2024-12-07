@@ -13,10 +13,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import io.jimmyjossue.designsystemlibrary.components.card.screenSnackBar
 import io.jimmyjossue.designsystemlibrary.components.loading.DSLoaderIndeterminateScreen
 import io.jimmyjossue.designsystemlibrary.template.screen.DSScreenUtils.toTopBarColors
@@ -46,11 +49,19 @@ fun DSScreen(
         snackbarHostState = remember { SnackbarHostState() },
         coroutineScope = rememberCoroutineScope(),
         scrollBehavior = scrollBehaviorType.toScrollBehavior(),
+        focusManager = LocalFocusManager.current,
+        keyboardController = LocalSoftwareKeyboardController.current
     )
 
     val scope = object : DSScreenScope {
         override fun getColors() = colors
         override fun getActions() = actions
+    }
+
+    LaunchedEffect(isLoading) {
+        if (isLoading) {
+            scope.getActions().hideKeyboard()
+        }
     }
 
     Scaffold(
@@ -81,8 +92,8 @@ fun DSScreen(
     DSLoaderIndeterminateScreen(
         isVisible = isLoading,
         text = loader.text,
-        primaryColor = colors.primary,
-        backgroundColor = colors.background,
+        primaryColor = colors.loaderPrimary,
+        backgroundColor = colors.loaderBackground,
         isEnableBackHandler = loader.isEnableBackHandler,
     )
 }

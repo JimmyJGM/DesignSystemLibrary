@@ -20,11 +20,13 @@ import io.jimmyjossue.designsystemlibrary.theme.catalog.DSColors
 import io.jimmyjossue.designsystemlibrary.theme.catalog.DSDimensions
 import io.jimmyjossue.designsystemlibrary.theme.catalog.DSRadius
 import io.jimmyjossue.designsystemlibrary.theme.catalog.DSShapes
+import io.jimmyjossue.designsystemlibrary.theme.catalog.DSTypography
 import io.jimmyjossue.designsystemlibrary.theme.catalog.LocalColors
 import io.jimmyjossue.designsystemlibrary.theme.catalog.LocalDimensions
 import io.jimmyjossue.designsystemlibrary.theme.catalog.LocalRadius
 import io.jimmyjossue.designsystemlibrary.theme.catalog.LocalShapes
 import io.jimmyjossue.designsystemlibrary.theme.catalog.color
+import io.jimmyjossue.designsystemlibrary.theme.catalog.localTypography
 
 @Composable
 fun AppTheme(

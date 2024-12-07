@@ -13,4 +13,6 @@ data class DSScreenColors(
     val topBarBackgroundScrolled: Color,
     val topBarContentScrolled: Color,
     val topBarBorderScrolled: Color,
+    val loaderBackground: Color,
+    val loaderPrimary: Color,
 )

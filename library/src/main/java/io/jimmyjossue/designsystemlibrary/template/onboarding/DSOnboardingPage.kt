@@ -24,11 +24,11 @@ import io.jimmyjossue.designsystemlibrary.template.onboarding.DSOnboardingUtils.
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaHigh
 import io.jimmyjossue.designsystemlibrary.theme.catalog.color
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
-import io.jimmyjossue.designsystemlibrary.theme.medium
-import io.jimmyjossue.designsystemlibrary.theme.normal
-import io.jimmyjossue.designsystemlibrary.theme.typography
+import io.jimmyjossue.designsystemlibrary.theme.catalog.medium
+import io.jimmyjossue.designsystemlibrary.theme.catalog.normal
+import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
 import io.jimmyjossue.designsystemlibrary.utils.descriptionOfApp
-import io.jimmyjossue.designsystemlibrary.utils.parseDecoratedAnnotatedString
+import io.jimmyjossue.designsystemlibrary.utils.textdecorator.decoratedAnnotatedString
 import io.jimmyjossue.designsystemlibrary.utils.titleOfApp
 
 data class DSOnboardingPage(
@@ -81,7 +81,7 @@ internal fun ColumnScope.OnboardingPage(
         if (!title.isNullOrBlank()) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = title.parseDecoratedAnnotatedString(),
+                text = title.decoratedAnnotatedString(),
                 color = contentColor,
                 style = typography.titleLarge.medium,
             )
@@ -89,7 +89,7 @@ internal fun ColumnScope.OnboardingPage(
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = description.parseDecoratedAnnotatedString(),
+            text = description.decoratedAnnotatedString(),
             color = contentColor.alphaHigh,
             style = typography.button.normal,
         )

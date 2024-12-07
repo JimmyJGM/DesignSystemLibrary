@@ -1,4 +1,4 @@
-package io.jimmyjossue.designsystemlibrary.utils
+package io.jimmyjossue.designsystemlibrary.utils.extension
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString

@@ -25,9 +25,9 @@ import io.jimmyjossue.designsystemlibrary.components.button.DSButtonUtils.toButt
 import io.jimmyjossue.designsystemlibrary.components.separator.DSSpacer
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.theme.catalog.shape
-import io.jimmyjossue.designsystemlibrary.theme.typography
+import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
 import io.jimmyjossue.designsystemlibrary.utils.DSHorizontal
-import io.jimmyjossue.designsystemlibrary.utils.parseDecoratedAnnotatedString
+import io.jimmyjossue.designsystemlibrary.utils.textdecorator.decoratedAnnotatedString
 
 data class DSButtonIcon(
     @DrawableRes val icon: Int,
@@ -174,7 +174,7 @@ private fun ButtonContent(
     if (!text.isNullOrBlank()) {
         Text(
             style = typography.button,
-            text = text.parseDecoratedAnnotatedString(),
+            text = text.decoratedAnnotatedString(),
         )
     }
 

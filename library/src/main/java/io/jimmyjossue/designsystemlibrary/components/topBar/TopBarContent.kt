@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import io.jimmyjossue.designsystemlibrary.R
 import io.jimmyjossue.designsystemlibrary.components.image.DSImage
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
-import io.jimmyjossue.designsystemlibrary.theme.typography
-import io.jimmyjossue.designsystemlibrary.utils.parseDecoratedAnnotatedString
+import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
+import io.jimmyjossue.designsystemlibrary.utils.textdecorator.decoratedAnnotatedString
 
 enum class DSImageShape {
     CIRCLE, RECTANGLE, ROUND_CORNER
@@ -74,7 +74,7 @@ internal fun RowScope.TopBarContent(
         if (!model.title.isNullOrBlank()) {
             Text(
                 modifier = Modifier.heightIn(min = dimension.semiLarge),
-                text = model.title.parseDecoratedAnnotatedString(),
+                text = model.title.decoratedAnnotatedString(),
                 style = typography.title,
                 color = contentColor,
             )

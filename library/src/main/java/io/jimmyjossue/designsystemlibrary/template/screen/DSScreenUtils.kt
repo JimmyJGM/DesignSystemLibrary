@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import io.jimmyjossue.designsystemlibrary.components.topBar.DSTopBarColors
 import io.jimmyjossue.designsystemlibrary.template.screen.model.DSScreenColors
+import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLow
+import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
 import io.jimmyjossue.designsystemlibrary.theme.catalog.color
 
 object DSScreenUtils {
@@ -19,7 +21,9 @@ object DSScreenUtils {
         topBarContentScrolled: Color = color.typography,
         topBarContent: Color = color.typography,
         topBarAccent: Color = color.accent,
-        topBarBorderScrolled: Color = color.surfaceDark,
+        topBarBorderScrolled: Color = color.surfaceDark.alphaLow,
+        loaderBackground: Color = color.background,
+        loaderPrimary: Color = color.primary,
     ) = DSScreenColors(
         primary = primary,
         accent = accent,
@@ -31,6 +35,8 @@ object DSScreenUtils {
         topBarBackgroundScrolled = topBarBackgroundScrolled,
         topBarContentScrolled = topBarContentScrolled,
         topBarBorderScrolled = topBarBorderScrolled,
+        loaderBackground = loaderBackground,
+        loaderPrimary = loaderPrimary,
     )
 
     internal fun DSScreenColors.toTopBarColors() = DSTopBarColors(
