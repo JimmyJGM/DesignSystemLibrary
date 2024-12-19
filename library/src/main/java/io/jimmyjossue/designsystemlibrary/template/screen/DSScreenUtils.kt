@@ -3,6 +3,8 @@ package io.jimmyjossue.designsystemlibrary.template.screen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import io.jimmyjossue.designsystemlibrary.components.topBar.DSTopBarColors
+import io.jimmyjossue.designsystemlibrary.template.form.DSFormUtils
+import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormColors
 import io.jimmyjossue.designsystemlibrary.template.screen.model.DSScreenColors
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
@@ -46,6 +48,22 @@ object DSScreenUtils {
         borderScrolled = topBarBorderScrolled,
         content = topBarContent,
         accent = topBarAccent,
+    )
+
+    @Composable
+    fun DSScreenColors.toFormColors(
+        surface: Color = DSFormUtils.getColors().surface,
+        surfaceDark: Color = DSFormUtils.getColors().surfaceDark,
+        primaryDisabled: Color = DSFormUtils.getColors().primaryDisabled,
+    ) = DSFormColors(
+        typography = content,
+        primary = primary,
+        onPrimary = background,
+        primaryDisabled = primaryDisabled,
+        accent = accent,
+        background = background,
+        surface = surface,
+        surfaceDark = surfaceDark,
     )
 
 }

@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.jimmyjossue.designsystemlibrary.components.separator.DSSpacer
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaHigh
+import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
 import io.jimmyjossue.designsystemlibrary.theme.catalog.color
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.theme.catalog.isLuminanceMore
@@ -67,7 +68,7 @@ fun DSLoaderIndeterminateScreen(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = backgroundColor.alphaHigh)
+                .background(color = backgroundColor.alphaMedium)
                 .clickable(enabled = false, onClick = onClick, role = Role.Image),
         ) {
             Column(

@@ -14,7 +14,7 @@ data class DSColors(
     val accent: Color = Color(0xFF585CC1),
     val accentSurface: Color = Color(0xFFC9CBFF),
     val background: Color = Color(0xFFFFFFFF),
-    val surface: Color = Color(0xFFF4F4F5),
+    val surface: Color = Color(0xFFEFEFEF),
     val surfaceDark: Color = Color(0xFFCFD2D2),
     val typography: Color = Color(0xFF060708),
     val typographyDisabled: Color = Color(0xFF55585E),

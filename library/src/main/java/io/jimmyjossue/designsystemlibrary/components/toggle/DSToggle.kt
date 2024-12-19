@@ -64,7 +64,7 @@ fun DSToggleSwitch(
     val borderWidth: Dp = 2.dp
 
     val offset by animateDpAsState(
-        targetValue = if (isSelected) width - size else 0.dp,
+        targetValue = if (isSelected) width - size else dimension.none,
         animationSpec = tween(durationMillis = 300),
         label = ""
     )
@@ -88,9 +88,14 @@ fun DSToggleSwitch(
     ) {
         Box(
             modifier = Modifier
-                .size(size)
+                .size(size = size)
                 .offset(x = offset)
-                .padding(all = borderWidth)
+                .padding(
+                    all = when (isSelected) {
+                        true -> borderWidth
+                        false -> borderWidth.plus(1.5.dp)
+                    }
+                )
                 .clip(shape = CircleShape)
                 .background(color = iconColor),
         )

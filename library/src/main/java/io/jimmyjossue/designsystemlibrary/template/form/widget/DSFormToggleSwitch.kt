@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import io.jimmyjossue.designsystemlibrary.components.toggle.DSToggleSwitch
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormColors
@@ -27,7 +26,6 @@ internal fun DSFormToggleSwitch(
             horizontalArrangement = Arrangement.spacedBy(dimension.small)
         ) {
             Box(
-                contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .weight(1f)
                     .heightIn(min = dimension.semiLarge)

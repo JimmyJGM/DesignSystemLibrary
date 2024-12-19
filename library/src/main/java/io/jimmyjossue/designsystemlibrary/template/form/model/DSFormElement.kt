@@ -1,6 +1,10 @@
 package io.jimmyjossue.designsystemlibrary.template.form.model
 
-import io.jimmyjossue.designsystemlibrary.components.input.DSInputDropdown
+import io.jimmyjossue.designsystemlibrary.components.input.DSInputIcon
+import io.jimmyjossue.designsystemlibrary.components.input.config.DSInputImeAction
+import io.jimmyjossue.designsystemlibrary.components.input.config.DSKeyboardType
+import io.jimmyjossue.designsystemlibrary.components.selectors.chips.DSChip
+import io.jimmyjossue.designsystemlibrary.utils.DSCapitalization
 import io.jimmyjossue.designsystemlibrary.utils.DSHorizontal
 
 // Input
@@ -44,6 +48,11 @@ sealed class DSFormElement(
         val maxLines: Int = Int.MAX_VALUE,
         val isReadOnly: Boolean = false,
         val displayName: String,
+        val leadingIcon: DSInputIcon? = null,
+        val trailingIcon: DSInputIcon? = null,
+        val imeAction: DSInputImeAction? = null,
+        val keyboardType: DSKeyboardType = DSKeyboardType.Text,
+        val capitalization: DSCapitalization = DSCapitalization.None,
         override val key: String,
         override val isVisible: Boolean = true,
     ) : DSFormElement(
@@ -58,6 +67,20 @@ sealed class DSFormElement(
         val label: String? = null,
         val helper: String? = null,
         val isEnabled: Boolean = true,
+        val displayName: String,
+        override val key: String,
+        override val isVisible: Boolean = true,
+    ): DSFormElement(
+        key = key,
+        isVisible = isVisible
+    )
+
+    data class InputChips(
+        val options: List<DSChip> = emptyList(),
+        val label: String? = null,
+        val helper: String? = null,
+        val isEnabled: Boolean = true,
+        val maxSelected: Int = Int.MAX_VALUE,
         val displayName: String,
         override val key: String,
         override val isVisible: Boolean = true,

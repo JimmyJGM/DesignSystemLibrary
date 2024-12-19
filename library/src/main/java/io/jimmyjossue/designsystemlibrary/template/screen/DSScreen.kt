@@ -1,6 +1,7 @@
 package io.jimmyjossue.designsystemlibrary.template.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,9 +18,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.unit.dp
 import io.jimmyjossue.designsystemlibrary.components.card.screenSnackBar
 import io.jimmyjossue.designsystemlibrary.components.loading.DSLoaderIndeterminateScreen
 import io.jimmyjossue.designsystemlibrary.template.screen.DSScreenUtils.toTopBarColors
@@ -29,6 +32,7 @@ import io.jimmyjossue.designsystemlibrary.template.screen.model.DSScreenTopBar
 import io.jimmyjossue.designsystemlibrary.template.screen.model.DSScrollBehaviorType
 import io.jimmyjossue.designsystemlibrary.template.screen.model.screenTopBar
 import io.jimmyjossue.designsystemlibrary.template.screen.model.toScrollBehavior
+import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 
 interface DSScreenScope {
     fun getColors(): DSScreenColors
@@ -110,7 +114,7 @@ private fun Modifier.getScreenStatusBarPaddings(
 private fun Modifier.getScreenNavBarPaddings(
     haveNavBar: Boolean
 ): Modifier {
-    return when (!haveNavBar) {
+    return when (haveNavBar) {
         true -> this.navigationBarsPadding()
         false -> this
     }

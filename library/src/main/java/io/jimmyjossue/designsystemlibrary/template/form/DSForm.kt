@@ -14,17 +14,25 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import io.jimmyjossue.designsystemlibrary.R
 import io.jimmyjossue.designsystemlibrary.components.button.DSButtonPrimary
+import io.jimmyjossue.designsystemlibrary.components.input.DSInputIcon
+import io.jimmyjossue.designsystemlibrary.components.input.config.DSKeyboardType
+import io.jimmyjossue.designsystemlibrary.components.selectors.chips.ChipsPreview
+import io.jimmyjossue.designsystemlibrary.components.selectors.chips.DSChip
+import io.jimmyjossue.designsystemlibrary.components.selectors.chips.DSChips
+import io.jimmyjossue.designsystemlibrary.components.selectors.chips.staticChips
 import io.jimmyjossue.designsystemlibrary.components.separator.DSSpacer
 import io.jimmyjossue.designsystemlibrary.template.form.DSFormUtils.toButtonColors
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormColors
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormConfig
+import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormElement
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormElement.InputDropdown
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormElement.InputText
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormElement.LabelBody
@@ -37,8 +45,9 @@ import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaHigh
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
+import io.jimmyjossue.designsystemlibrary.utils.asObjectOrNull
 import io.jimmyjossue.designsystemlibrary.utils.doIfItIs
-import io.jimmyjossue.designsystemlibrary.utils.extension.borderTop
+import io.jimmyjossue.designsystemlibrary.utils.iconOptionsDots
 import io.jimmyjossue.designsystemlibrary.utils.isNotNull
 import io.jimmyjossue.designsystemlibrary.utils.toBooleanOrNull
 import io.jimmyjossue.designsystemlibrary.utils.toIntOrNull
@@ -55,84 +64,108 @@ fun DSForm(
     onChangeValue: (value: DSFormValue) -> Unit,
     onSubmit: (List<DSFormValue>) -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
+
+    fun onFocusDown() = focusManager.moveFocus(focusDirection = FocusDirection.Down)
+
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(color = colors.background),
+            .background(color = colors.background)
+            .verticalScroll(state = rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(
+            space = config.separationSpace
+        ),
     ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(space = config.separationSpace),
+        FormLabel(
+            value = title,
+            colors = colors,
+            style = typography.title,
             modifier = Modifier
-                .weight(weight = 1f)
-                .verticalScroll(state = rememberScrollState())
                 .padding(horizontal = config.paddingHorizontal)
                 .padding(top = config.paddingVertical)
-        ) {
-            FormLabel(
-                value = title,
-                style = typography.title,
-                colors = colors,
-            )
+        )
 
-            sections.forEach { section ->
-                Column {
-                    FormLabel(
-                        value = section.title,
-                        style = typography.body,
-                        colors = colors.copy(typography = colors.typography.alphaHigh),
-                        modifier = mdfPaddingBottom(pd = dimension.small)
+        sections.forEachIndexed { index, section ->
+            Column(
+                modifier = Modifier.padding(
+                    top = when (index == 0) {
+                        true -> config.separationSpace.div(other = 2)
+                        false -> dimension.none
+                    }
+                )
+            ) {
+                FormLabel(
+                    value = section.title,
+                    style = typography.body,
+                    colors = colors.copy(typography = colors.typography.alphaHigh),
+                    modifier = mdfPadding(
+                        bottom = dimension.small,
+                        horizontal = config.paddingHorizontal
                     )
-                    FormLabel(
-                        value = section.description,
-                        style = typography.caption,
-                        colors = colors.copy(typography = colors.typography.alphaMedium),
-                        modifier = mdfPaddingBottom(pd = dimension.medium)
+                )
+                FormLabel(
+                    value = section.description,
+                    style = typography.caption,
+                    colors = colors.copy(typography = colors.typography.alphaMedium),
+                    modifier = mdfPadding(
+                        bottom = dimension.small,
+                        horizontal = config.paddingHorizontal
                     )
+                )
+                Box(
+                    modifier = mdfPadding(
+                        bottom = dimension.small,
+                        horizontal = config.paddingHorizontal
+                    )
+                ) {
                     FormSection(
                         elements = section.elements,
                         colors = colors,
                         space = dimension.medium,
+                        withBackground = section.withBackground,
                         contentPadding = config.paddingHorizontal.div(other = 2) + dimension.smalled,
                         onChangeValue = onChangeValue,
+                        onFocusDown = ::onFocusDown,
                     )
                 }
             }
-            DSSpacer(size = config.paddingVertical)
         }
-        Box(
+
+        DSSpacer(
+            size = config.paddingVertical
+        )
+
+        DSButtonPrimary(
             modifier = Modifier
-                .borderTop(color = colors.surface)
-                .background(color = colors.surface)
-                .padding(vertical = config.paddingVertical)
+                .fillMaxWidth()
+                .padding(bottom = config.paddingVertical)
                 .padding(horizontal = config.paddingHorizontal),
-            contentAlignment = Alignment.Center,
-            content = {
-                DSButtonPrimary(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = colors.toButtonColors(),
-                    text = submitText,
-                    onClick = {
-                        onSubmit(
-                            sections.getValues()
-                        )
-                    }
-                )
+            colors = colors.toButtonColors(),
+            text = submitText,
+            onClick = {
+                onSubmit(sections.getValues())
             }
         )
     }
 }
 
 @SuppressLint("ModifierFactoryExtensionFunction")
+private fun mdfPadding(bottom: Dp, horizontal: Dp) = Modifier
+    .padding(bottom = bottom)
+    .padding(horizontal = horizontal)
+
+@SuppressLint("ModifierFactoryExtensionFunction")
 private fun mdfPaddingBottom(pd: Dp) = Modifier.padding(bottom = pd)
 
 private enum class Keys {
-    Name, PaternalName, MaternalName, User, Password, LegalAge, Legal, Users
+    Name, PaternalName, MaternalName, User, Password, LegalAge, Legal, Users, options
 }
 
 @Preview
 @Composable
 fun PreviewDSForm(
-    colors: DSFormColors = DSFormUtils. getColors(),
+    colors: DSFormColors = DSFormUtils.getColors(),
     onSubmit: () -> Unit = {}
 ) {
     val nameState = remember { mutableStateOf("") }
@@ -142,6 +175,7 @@ fun PreviewDSForm(
     val passwordState = remember { mutableStateOf("") }
     val legalAgeState = remember { mutableStateOf(false) }
     val legalState = remember { mutableStateOf(false) }
+    val chips = remember { mutableStateOf(staticChips) }
     val optionSelectedState = remember { mutableStateOf<String?>(null) }
     val options = listOf(
         "Luz Belen",
@@ -169,6 +203,21 @@ fun PreviewDSForm(
         }
     }
 
+    val onChangeAny = { key: String, value: Any ->
+        when (key) {
+            Keys.options.name -> value.asObjectOrNull<DSChip>()?.let { chip ->
+                val newOptions = chips.value.toMutableList()
+                val finned = chips.value.find { it.id == chip.id }
+                val index = chips.value.indexOf(finned)
+                if (index != -1) {
+                    newOptions[index] = chip
+                    chips.value = newOptions
+                }
+            }
+            else -> Unit
+        }
+    }
+
     DSForm(
         colors = colors,
         onSubmit = {
@@ -176,24 +225,32 @@ fun PreviewDSForm(
                 prefix = "[",
                 postfix = "]",
                 separator = ", ",
-                transform =  { value ->
+                transform = { value ->
                     "${value.key}: ${value.value}"
                 },
             )
-            Log.d(
-                "fromOnSubmit",
-                "data: $values",
-            )
+            Log.d("fromOnSubmit", "data: $values",)
             onSubmit()
         },
         sections = listOf(
             DSFormSection(
                 title = "Datos personales",
                 description = "Escribe los datos personales requeridos para tu cuenta. Estos datos no seran visibles para otros usuarios",
+                withBackground = true,
                 elements = listOf(
+                    DSFormElement.InputChips(
+                        options = chips.value,
+                        displayName = "Nombre",
+                        key = Keys.options.name,
+                        maxSelected = 3,
+                        label = "opciones",
+                        helper = "Solo puedes elegir 3 opciones como máximo.",
+                    ),
                     InputText(
                         key = Keys.Name.name,
                         value = nameState.value,
+                        keyboardType = DSKeyboardType.Uri,
+                        trailingIcon = DSInputIcon(iconOptionsDots),
                         displayName = "Nombre",
                         label = "Nombre",
                         hint = "Escribe tu nombre"
@@ -224,6 +281,7 @@ fun PreviewDSForm(
             ),
             DSFormSection(
                 title = "Datos de la cuenta",
+                withBackground = true,
                 elements = listOf(
                     InputText(
                         key = Keys.User.name,
@@ -252,6 +310,7 @@ fun PreviewDSForm(
             ),
             DSFormSection(
                 title = "Legales",
+                withBackground = true,
                 elements = listOf(
                     ToggleSwitch(
                         key = Keys.Legal.name,
@@ -286,6 +345,11 @@ fun PreviewDSForm(
 
                 data.value?.toIntOrNull.isNotNull() -> data.value?.doIfItIs<Int> {
                     Log.d("fromOnChangeValue_Int", "${data.key}: $it")
+                }
+
+                else -> data.value?.doIfItIs<Any> {
+                    Log.d("fromOnChangeValue_Any", "${data.key}: $it")
+                    onChangeAny(data.key, it)
                 }
             }
         },

@@ -1,20 +1,30 @@
 package io.jimmyjossue.designsystemlibrary.components.input
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.selection.TextSelectionColors
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaHigh
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaSemiLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.color
+import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
 
 object DSInputUtils {
+
+    private val iconSize @Composable get() = dimension.semiLarge
+    private val iconPadding @Composable get() = dimension.smalled
 
     internal fun DSInputColors.toInputColors() = TextFieldColors(
         focusedTextColor = typography,
@@ -119,4 +129,24 @@ object DSInputUtils {
         textStyle = typography.caption,
     )
 
+    @Composable
+    internal fun icon(
+        @DrawableRes icon: Int? = null,
+        isEnabled: Boolean = true,
+        onClick: (() -> Unit)? = null,
+    ): @Composable (() -> Unit)? = icon?.let {
+        @Composable {
+            Icon(
+                painter = painterResource(id = icon),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(size = iconSize)
+                    .clickable(
+                        enabled = isEnabled && onClick != null,
+                        onClick = { onClick?.invoke() }
+                    )
+                    .padding(all = iconPadding),
+            )
+        }
+    }
 }

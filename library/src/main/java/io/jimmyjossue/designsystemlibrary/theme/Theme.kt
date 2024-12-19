@@ -43,12 +43,15 @@ fun AppTheme(
         LocalRadius provides radius,
         LocalDimensions provides dimensions,
         localTypography provides typographies,
-        content = content,
+        content = {
+            SetStatusBarColor(background = Color.Transparent)
+            content.invoke()
+        },
     )
 }
 
 @Composable
-fun SetStatusBarColor(
+private fun SetStatusBarColor(
     background: Color = color.background,
     isLightIcons: Boolean = background.luminance() > 0.5f
 ) {
@@ -57,14 +60,17 @@ fun SetStatusBarColor(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
+            WindowCompat.setDecorFitsSystemWindows(window, false)
             window.statusBarColor = background.toArgb()
             window.navigationBarColor = background.toArgb()
+            window.navigationBarDividerColor = background.toArgb()
+            window.navigationBarDividerColor = background.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !isLightIcons
         }
     }
 }
 
-@Preview()
+@Preview
 @Composable
 private fun PreviewScreen() {
     Box(
