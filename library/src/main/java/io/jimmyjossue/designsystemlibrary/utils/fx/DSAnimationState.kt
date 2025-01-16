@@ -1,4 +1,4 @@
-package io.jimmyjossue.designsystemlibrary.utils
+package io.jimmyjossue.designsystemlibrary.utils.fx
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.AnimationSpec

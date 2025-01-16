@@ -21,10 +21,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLow
+import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLower
+import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
+import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaSemiLow
+import io.jimmyjossue.designsystemlibrary.theme.catalog.color
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.utils.textdecorator.decoratedAnnotatedString
 
@@ -47,11 +52,12 @@ internal fun screenSnackBar(hostState: SnackbarHostState) = @Composable {
         val visuals = it.visuals as DSSnackBarVisuals
 
         Snackbar(
-            containerColor = visuals.cardType.getBackgroundColor(),
+            containerColor = color.surface.copy(alpha = 0.85f),
             contentColor = visuals.cardType.getContentColor(),
             shape = visuals.cardShape,
             modifier = Modifier
-                .padding(all = dimension.small)
+                .padding(horizontal = dimension.small)
+                .padding(bottom = dimension.smalled)
                 .fillMaxWidth()
                 .clip(shape = visuals.cardShape)
                 .border(
@@ -70,7 +76,7 @@ internal fun screenSnackBar(hostState: SnackbarHostState) = @Composable {
                         Icon(
                             modifier = Modifier.size(size = visuals.sizeType.getIconSize()),
                             painter = painterResource(id = visuals.icon),
-                            tint = visuals.cardType.getBorderColor(),
+                            tint = Color.Unspecified,
                             contentDescription = null,
                         )
                     }
@@ -78,7 +84,7 @@ internal fun screenSnackBar(hostState: SnackbarHostState) = @Composable {
                         modifier = Modifier.weight(1f),
                         text = visuals.message.decoratedAnnotatedString(),
                         style = visuals.sizeType.getTypography(),
-                        color = visuals.cardType.getContentColor(),
+                        color = color.typography,
                         onTextLayout = { textLayout ->
                             if (lineCount.intValue != textLayout.lineCount) {
                                 lineCount.intValue != textLayout.lineCount

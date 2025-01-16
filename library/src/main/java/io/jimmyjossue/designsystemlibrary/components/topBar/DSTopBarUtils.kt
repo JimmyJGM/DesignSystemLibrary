@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.jimmyjossue.designsystemlibrary.theme.catalog.color
-import io.jimmyjossue.designsystemlibrary.utils.dsAnimateColorAsState
+import io.jimmyjossue.designsystemlibrary.utils.fx.dsAnimateColorAsState
 
 object DSTopBarUtils {
     @Composable

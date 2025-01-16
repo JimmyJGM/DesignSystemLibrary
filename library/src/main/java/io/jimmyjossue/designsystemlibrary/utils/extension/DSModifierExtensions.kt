@@ -1,11 +1,19 @@
 package io.jimmyjossue.designsystemlibrary.utils.extension
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -41,3 +49,22 @@ fun Modifier.borderTop(
         )
     }
 }
+
+@SuppressLint("UnnecessaryComposedModifier")
+fun Modifier.borderDashed(
+    color: Color,
+    width: Dp = 1.dp,
+    cornerRadius: Dp = 0.dp
+): Modifier = composed {
+    val widthPx = with(LocalDensity.current) { width.toPx() }
+    val cornerRadiusPx = with(LocalDensity.current) { cornerRadius.toPx() }
+    drawBehind {
+        val pathEffect = PathEffect.dashPathEffect(intervals = floatArrayOf(10f, 10f), phase = 0f)
+        drawRoundRect(
+            color = color,
+            style = Stroke(width = widthPx, pathEffect = pathEffect),
+            cornerRadius = CornerRadius(cornerRadiusPx, cornerRadiusPx)
+        )
+    }
+}
+

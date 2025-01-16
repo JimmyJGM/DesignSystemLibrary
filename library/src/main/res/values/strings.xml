@@ -3,4 +3,7 @@
     <string name="ds_onboarding_btn_skip">Omitir</string>
     <string name="ds_onboarding_btn_next">Siguiente</string>
     <string name="ds_onboarding_btn_finish">Empezar</string>
+    <string name="ds_pickerFileItem_details"><![CDATA[%1$s • %2$s]]></string>
+    <string name="ds_label_accept">Aceptar</string>
+    <string name="ds_label_cancel">Cancelar</string>
 </resources>

@@ -1,11 +1,9 @@
 package io.jimmyjossue.designsystemlibrary.template.form
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import io.jimmyjossue.designsystemlibrary.components.button.DSButtonPrimaryColors
-import io.jimmyjossue.designsystemlibrary.components.input.DSInputColors
 import io.jimmyjossue.designsystemlibrary.components.input.DSInputUtils
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormColors
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormConfig
@@ -39,14 +37,16 @@ object DSFormUtils {
     @Composable
     fun getConfig(
         isStickyButtonSubmit: Boolean = false,
-        paddingVertical: Dp = dimension.medium,
-        paddingHorizontal: Dp = dimension.medium,
-        separationSpace: Dp = dimension.semiLarge,
+        paddingForm: Dp = dimension.medium,
+        paddingElements: Dp = dimension.small,
+        spaceSection: Dp = dimension.semiLarge,
+        spaceElement: Dp = dimension.medium,
     ) = DSFormConfig(
         isStickyButtonSubmit = isStickyButtonSubmit,
-        separationSpace = separationSpace,
-        paddingVertical = paddingVertical,
-        paddingHorizontal = paddingHorizontal,
+        paddingForm = paddingForm,
+        paddingElements = paddingElements,
+        spaceSections = spaceSection,
+        spaceElements = spaceElement,
     )
 
     @Composable

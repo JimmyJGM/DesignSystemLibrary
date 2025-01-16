@@ -26,14 +26,13 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.jimmyjossue.designsystemlibrary.components.separator.DSSpacer
-import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaHigh
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
 import io.jimmyjossue.designsystemlibrary.theme.catalog.color
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.theme.catalog.isLuminanceMore
 import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
-import io.jimmyjossue.designsystemlibrary.utils.dsAnimateAlphaState
-import io.jimmyjossue.designsystemlibrary.utils.dsAnimateRotatedState
+import io.jimmyjossue.designsystemlibrary.utils.fx.dsAnimateAlphaState
+import io.jimmyjossue.designsystemlibrary.utils.fx.dsAnimateRotatedState
 import io.jimmyjossue.designsystemlibrary.utils.onClick
 
 private val pivotFraction = TransformOrigin(pivotFractionX = 0.55F, pivotFractionY = 0.57F)

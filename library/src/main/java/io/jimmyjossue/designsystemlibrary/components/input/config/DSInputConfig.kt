@@ -1,7 +1,7 @@
 package io.jimmyjossue.designsystemlibrary.components.input.config
 
 import androidx.compose.foundation.text.KeyboardOptions
-import io.jimmyjossue.designsystemlibrary.utils.DSCapitalization
+import io.jimmyjossue.designsystemlibrary.utils.DSCapitalizationType
 import io.jimmyjossue.designsystemlibrary.utils.toKeyboardCapitalization
 
 data class DSInputConfig(
@@ -11,7 +11,7 @@ data class DSInputConfig(
     val isReadOnly: Boolean = false,
     val isSingleLine: Boolean = false,
     val maxLines: Int = Int.MAX_VALUE,
-    val capitalization: DSCapitalization = DSCapitalization.Words,
+    val capitalization: DSCapitalizationType = DSCapitalizationType.Words,
     val keyboardType: DSKeyboardType = DSKeyboardType.Text,
     val autoCorrectEnabled: Boolean = false,
     val showKeyboardOnFocus: Boolean = false,

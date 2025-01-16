@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.coerceAtLeast
@@ -175,6 +176,8 @@ private fun ButtonContent(
         Text(
             style = typography.button,
             text = text.decoratedAnnotatedString(),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
         )
     }
 

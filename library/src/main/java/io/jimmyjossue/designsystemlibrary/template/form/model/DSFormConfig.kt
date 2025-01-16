@@ -4,7 +4,8 @@ import androidx.compose.ui.unit.Dp
 
 data class DSFormConfig(
     val isStickyButtonSubmit: Boolean = false,
-    val paddingVertical: Dp,
-    val paddingHorizontal: Dp,
-    val separationSpace: Dp,
+    val paddingForm: Dp,
+    val paddingElements: Dp,
+    val spaceSections: Dp,
+    val spaceElements: Dp,
 )

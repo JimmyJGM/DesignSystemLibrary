@@ -1,6 +1,7 @@
 package io.jimmyjossue.designsystemlibrary.components.selectors.chips
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import io.jimmyjossue.designsystemlibrary.components.selectors.chips.config.DSChipColors
 import io.jimmyjossue.designsystemlibrary.components.selectors.chips.config.DSChipsConfig
 import io.jimmyjossue.designsystemlibrary.components.selectors.chips.config.DSChipsUtils
+import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLower
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.theme.catalog.shape
@@ -153,6 +155,14 @@ internal fun ChipSelectable(
                 onClick = onSelected,
                 role = Role.RadioButton
             )
+            .border(
+                width = 1.dp,
+                shape = shape,
+                color = when {
+                    isSelected -> Color.Transparent
+                    else -> colors.typography.copy(alpha = 0.01f)
+                }
+            )
             .padding(
                 horizontal = 12.dp,
                 vertical = 8.dp,
@@ -171,16 +181,14 @@ internal fun ChipSelectable(
     }
 }
 
-val staticChips = listOf(
+internal val staticChips = listOf(
     DSChip(id = "1234567", text = "Bebida"),
     DSChip(id = "4567", text = "Postre"),
-    DSChip(id = "91836728", text = "Tercero", isEnabled = false),
+    DSChip(id = "91836728", text = "Seleccionado"),
     DSChip(id = "91827", text = "Septimo"),
     DSChip(id = "5632781", text = "SextoSentido", isEnabled = false),
     DSChip(id = "0976123", text = "Novenisimo"),
     DSChip(id = "67832", text = "DecimoPrimero", isEnabled = false),
-    DSChip(id = "78392", text = "Doceabo"),
-    DSChip(id = "5290", text = "Uno"),
 )
 
 @Preview(showBackground = true, backgroundColor = 0xfff1f1f1)

@@ -24,9 +24,11 @@ import io.jimmyjossue.designsystemlibrary.R
 import io.jimmyjossue.designsystemlibrary.components.button.DSButtonPrimary
 import io.jimmyjossue.designsystemlibrary.components.input.DSInputIcon
 import io.jimmyjossue.designsystemlibrary.components.input.config.DSKeyboardType
-import io.jimmyjossue.designsystemlibrary.components.selectors.chips.ChipsPreview
+import io.jimmyjossue.designsystemlibrary.components.picker.DSPickerFile
+import io.jimmyjossue.designsystemlibrary.components.picker.DSPickerFileUtils
+import io.jimmyjossue.designsystemlibrary.components.picker.DSPickerImage
+import io.jimmyjossue.designsystemlibrary.components.picker.DSPickerImageUtils
 import io.jimmyjossue.designsystemlibrary.components.selectors.chips.DSChip
-import io.jimmyjossue.designsystemlibrary.components.selectors.chips.DSChips
 import io.jimmyjossue.designsystemlibrary.components.selectors.chips.staticChips
 import io.jimmyjossue.designsystemlibrary.components.separator.DSSpacer
 import io.jimmyjossue.designsystemlibrary.template.form.DSFormUtils.toButtonColors
@@ -42,9 +44,14 @@ import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormSection
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormValue
 import io.jimmyjossue.designsystemlibrary.template.form.model.getValues
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaHigh
+import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
+import io.jimmyjossue.designsystemlibrary.theme.catalog.color
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
+import io.jimmyjossue.designsystemlibrary.theme.catalog.shape
 import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
+import io.jimmyjossue.designsystemlibrary.utils.DSFileType
+import io.jimmyjossue.designsystemlibrary.utils.DSShapeType
 import io.jimmyjossue.designsystemlibrary.utils.asObjectOrNull
 import io.jimmyjossue.designsystemlibrary.utils.doIfItIs
 import io.jimmyjossue.designsystemlibrary.utils.iconOptionsDots
@@ -74,7 +81,7 @@ fun DSForm(
             .background(color = colors.background)
             .verticalScroll(state = rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(
-            space = config.separationSpace
+            space = config.spaceSections
         ),
     ) {
         FormLabel(
@@ -82,15 +89,52 @@ fun DSForm(
             colors = colors,
             style = typography.title,
             modifier = Modifier
-                .padding(horizontal = config.paddingHorizontal)
-                .padding(top = config.paddingVertical)
+                .padding(horizontal = config.paddingForm)
+                .padding(top = config.paddingForm)
+        )
+        DSPickerFile(
+            modifier = Modifier.padding(horizontal = config.paddingForm),
+            type = DSFileType.Image,
+            title = "Elige los archivos",
+            subtitle = "Los archivos que se eligan no deben de exeder el tamaño de 54 MB por cada uno.",
+            containerShape = shape.small,
+            colors = DSPickerFileUtils.getColors(
+                background = colors.background,
+                surface = colors.surface
+            ),
+            config = DSPickerFileUtils.getConfig(
+                maxFiles = 7,
+                contentPaddingParent = dimension.none,
+                contentPaddingItem = config.paddingElements,
+                addButtonText = "Agregar archivos",
+                separationElements = dimension.small
+            ),
+        )
+
+        DSPickerImage(
+            modifier = Modifier.padding(horizontal = config.paddingForm),
+            colors = DSPickerImageUtils.getColors(
+                primary = colors.accent,
+                typography = colors.typography,
+                primaryDisabled = colors.primaryDisabled,
+                typographyDisabled = colors.typography.alphaLow,
+                uploadedImageBorder = colors.typography,
+            ),
+            config = DSPickerImageUtils.getConfig(
+                imageShapeType = DSShapeType.Circle,
+                upLoadText = "Agrega tu imagen",
+                supportedExtensionsLabelText = "Formatos soportados",
+                changeText = "Cambiar",
+                maxSizeFile = 123985645L,
+            ),
+            imageFormat = "png",
         )
 
         sections.forEachIndexed { index, section ->
             Column(
                 modifier = Modifier.padding(
                     top = when (index == 0) {
-                        true -> config.separationSpace.div(other = 2)
+                        true -> config.spaceSections.div(other = 2)
                         false -> dimension.none
                     }
                 )
@@ -101,7 +145,7 @@ fun DSForm(
                     colors = colors.copy(typography = colors.typography.alphaHigh),
                     modifier = mdfPadding(
                         bottom = dimension.small,
-                        horizontal = config.paddingHorizontal
+                        horizontal = config.paddingForm
                     )
                 )
                 FormLabel(
@@ -110,21 +154,21 @@ fun DSForm(
                     colors = colors.copy(typography = colors.typography.alphaMedium),
                     modifier = mdfPadding(
                         bottom = dimension.small,
-                        horizontal = config.paddingHorizontal
+                        horizontal = config.paddingForm
                     )
                 )
                 Box(
                     modifier = mdfPadding(
                         bottom = dimension.small,
-                        horizontal = config.paddingHorizontal
+                        horizontal = config.paddingForm
                     )
                 ) {
-                    FormSection(
+                    FormSectionElement(
                         elements = section.elements,
                         colors = colors,
                         space = dimension.medium,
                         withBackground = section.withBackground,
-                        contentPadding = config.paddingHorizontal.div(other = 2) + dimension.smalled,
+                        contentPadding = config.paddingForm.div(other = 2) + dimension.smalled,
                         onChangeValue = onChangeValue,
                         onFocusDown = ::onFocusDown,
                     )
@@ -132,15 +176,13 @@ fun DSForm(
             }
         }
 
-        DSSpacer(
-            size = config.paddingVertical
-        )
+        DSSpacer(size = config.spaceSections)
 
         DSButtonPrimary(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = config.paddingVertical)
-                .padding(horizontal = config.paddingHorizontal),
+                .padding(bottom = config.paddingForm)
+                .padding(horizontal = config.paddingForm),
             colors = colors.toButtonColors(),
             text = submitText,
             onClick = {
@@ -236,7 +278,7 @@ fun PreviewDSForm(
             DSFormSection(
                 title = "Datos personales",
                 description = "Escribe los datos personales requeridos para tu cuenta. Estos datos no seran visibles para otros usuarios",
-                withBackground = true,
+                withBackground = false,
                 elements = listOf(
                     DSFormElement.InputChips(
                         options = chips.value,
@@ -281,7 +323,7 @@ fun PreviewDSForm(
             ),
             DSFormSection(
                 title = "Datos de la cuenta",
-                withBackground = true,
+                withBackground = false,
                 elements = listOf(
                     InputText(
                         key = Keys.User.name,
@@ -337,16 +379,13 @@ fun PreviewDSForm(
                     Log.d("fromOnChangeValue_Text", "${data.key}: $it")
                     onChangeText(data.key, it)
                 }
-
                 data.value?.toBooleanOrNull.isNotNull() -> data.value?.doIfItIs<Boolean> {
                     Log.d("fromOnChangeValue_Boolean", "${data.key}: $it")
                     onChangeBoolean(data.key, it)
                 }
-
                 data.value?.toIntOrNull.isNotNull() -> data.value?.doIfItIs<Int> {
                     Log.d("fromOnChangeValue_Int", "${data.key}: $it")
                 }
-
                 else -> data.value?.doIfItIs<Any> {
                     Log.d("fromOnChangeValue_Any", "${data.key}: $it")
                     onChangeAny(data.key, it)

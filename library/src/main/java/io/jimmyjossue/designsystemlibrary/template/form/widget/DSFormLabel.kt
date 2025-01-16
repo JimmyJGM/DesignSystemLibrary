@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormColors
@@ -21,6 +22,7 @@ internal fun DSFormLabel(
     style: TextStyle,
     align: DSHorizontal = DSHorizontal.LEFT,
     colors: DSFormColors,
+    onTextLayout: (TextLayoutResult) -> Unit = {}
 ) {
     CompositionLocalProvider(
         value = LocalColors provides DSColors(
@@ -35,6 +37,7 @@ internal fun DSFormLabel(
                 text = value.decoratedAnnotatedString(),
                 color = colors.typography,
                 style = style,
+                onTextLayout = onTextLayout,
                 textAlign = when (align) {
                     DSHorizontal.LEFT -> TextAlign.Left
                     DSHorizontal.RIGHT -> TextAlign.Start

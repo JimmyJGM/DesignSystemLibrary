@@ -1,5 +1,6 @@
 package io.jimmyjossue.designsystemlibrary.utils.extension
 
+import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -26,5 +27,25 @@ internal fun String.withStyle(
                 end = endIndex,
             )
         }
+    }
+}
+
+val String.fileExtension get() = substringAfterLast(delimiter = '.')
+
+fun List<String>?.toPickerFormats(type: String): Array<String> {
+    return when (!this.isNullOrEmpty()) {
+        true -> this.map { "$type/$it" }.toTypedArray()
+        else -> arrayOf("$type/*")
+    }.also {
+        Log.d("PickerFormats", "$it")
+    }
+}
+
+fun List<String>?.toPickerFormat(type: String): String {
+    return when (!this.isNullOrEmpty()) {
+        true -> this.joinToString(separator = ", ") { "$type/$it" }
+        else -> "$type/*"
+    }.also {
+        Log.d("PickerFormats", it)
     }
 }

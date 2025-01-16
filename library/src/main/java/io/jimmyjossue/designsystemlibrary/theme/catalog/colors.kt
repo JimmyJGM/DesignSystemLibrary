@@ -16,6 +16,7 @@ data class DSColors(
     val background: Color = Color(0xFFFFFFFF),
     val surface: Color = Color(0xFFEFEFEF),
     val surfaceDark: Color = Color(0xFFCFD2D2),
+    val scrim: Color = Color(0x59000000),
     val typography: Color = Color(0xFF060708),
     val typographyDisabled: Color = Color(0xFF55585E),
     val success: Color = Color(0xFF28D570),
@@ -40,6 +41,6 @@ val Color.alphaHigh get() = this.copy(alpha = 0.75f)
 val Color.alphaMedium get() = this.copy(alpha = 0.50f)
 val Color.alphaSemiLow get() = this.copy(alpha = 0.35f)
 val Color.alphaLow get() = this.copy(alpha = 0.15f)
-val Color.alphaLower get() = this.copy(alpha = 0.07f)
+val Color.alphaLower get() = this.copy(alpha = 0.05f)
 
 val Color.isLuminanceMore get() = this.luminance() > 0.5f

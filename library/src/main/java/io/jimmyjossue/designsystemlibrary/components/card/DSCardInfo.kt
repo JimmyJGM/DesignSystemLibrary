@@ -62,7 +62,7 @@ fun DSCardInfo(
             onClick = onClick,
             role = Role.Button,
             interactionSource = remember { MutableInteractionSource() },
-            indication = rememberRipple()
+            indication = null
         )
     } ?: Modifier
 

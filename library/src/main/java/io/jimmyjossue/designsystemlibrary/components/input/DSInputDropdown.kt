@@ -56,39 +56,32 @@ internal fun <T> DSInputDropdown(
     val expandedMenuState = remember { mutableStateOf(false) }
     val onShowMenu = { expandedMenuState.value = true }
     val onHideMenu = { expandedMenuState.value = false }
-    val onGloballyPositioned: (LayoutCoordinates) -> Unit = {
-        inputSizeState.value = it.size.toSize()
-    }
+    val onGlobalPosition: (LayoutCoordinates) -> Unit = { inputSizeState.value = it.size.toSize() }
     val onSelectedOption = { selected: DSInputDropdown<T> ->
         onChangeSelectOption(selected.value())
         onHideMenu()
     }
 
     Box {
-        //Box(
-        //    modifier = Modifier
-        //        .clip(shape = shapeInput)
-        //        .clickable(enabled = true, onClick = onShowMenu)
-        //) {
-            DSInputText(
-                modifier = modifier
-                    .clip(shape = shapeInput)
-                    .clickable(enabled = true, onClick = onShowMenu)
-                    .onGloballyPositioned(onGloballyPositioned = onGloballyPositioned),
-                trailingIcon = DSInputIcon(
-                    icon = when (expandedMenuState.value) {
-                        true -> R.drawable.ic_system_notification
-                        false -> R.drawable.ic_navigation_back
-                    }
-                ),
-                leadingIcon = leadingIcon,
-                value = value?.display().orEmpty(),
-                config = DSInputConfig(isReadOnly = true, placeholder = placeHolder),
-                isEnabled = false,
-                colors = colors,
-                onChangeValue = { }
-            )
-        //}
+        DSInputText(
+            modifier = modifier
+                .clip(shape = shapeInput)
+                .clickable(enabled = true, onClick = onShowMenu)
+                .onGloballyPositioned(onGloballyPositioned = onGlobalPosition),
+            trailingIcon = DSInputIcon(
+                icon = when (expandedMenuState.value) {
+                    true -> R.drawable.ic_system_notification
+                    false -> R.drawable.ic_navigation_back
+                }
+            ),
+            leadingIcon = leadingIcon,
+            value = value?.display().orEmpty(),
+            config = DSInputConfig(isReadOnly = true, placeholder = placeHolder),
+            isEnabled = false,
+            colors = colors,
+            onChangeValue = { }
+        )
+
 
         MaterialTheme(
             shapes = MaterialTheme.shapes.copy(medium = shape.medium),

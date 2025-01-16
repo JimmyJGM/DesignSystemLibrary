@@ -9,6 +9,7 @@ import io.jimmyjossue.designsystemlibrary.components.selectors.chips.config.DSCh
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormColors
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormElement
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLower
+import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaSemiLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.theme.catalog.shape
 import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
@@ -31,9 +32,7 @@ internal fun DSFormChips(
         DSChips(
             chips = when (model.isEnabled) {
                 true -> model.options
-                false -> model.options.map {
-                    it.copy(isEnabled = false)
-                }
+                false -> model.options.map { it.copy(isEnabled = false) }
             },
             contentShape = shape.smalled,
             config = DSChipsUtils.getConfig(
@@ -49,7 +48,7 @@ internal fun DSFormChips(
                 disabled = colors.primaryDisabled.copy(alpha = 0.35f),
                 surface = when (colors.background == colors.surface) {
                     true -> colors.typography.alphaLower
-                    false -> colors.background
+                    false -> colors.background.alphaSemiLow
                 },
             ),
             onChangeSelectChip = { id, isSelected ->
