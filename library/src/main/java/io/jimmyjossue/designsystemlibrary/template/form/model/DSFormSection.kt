@@ -24,6 +24,7 @@ fun List<DSFormSection>.getValues(): List<DSFormValue> {
                 is LabelCaption -> null
                 is LabelBody -> null
                 is InputChips -> DSFormValue(element.key, element.options.filter { it.isSelected })
+                is DSFormElement.PickerImage -> DSFormValue(element.key, "element.")
             }
         }
     }

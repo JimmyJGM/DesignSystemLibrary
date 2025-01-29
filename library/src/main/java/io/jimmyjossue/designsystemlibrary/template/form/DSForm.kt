@@ -26,8 +26,6 @@ import io.jimmyjossue.designsystemlibrary.components.input.DSInputIcon
 import io.jimmyjossue.designsystemlibrary.components.input.config.DSKeyboardType
 import io.jimmyjossue.designsystemlibrary.components.picker.DSPickerFile
 import io.jimmyjossue.designsystemlibrary.components.picker.DSPickerFileUtils
-import io.jimmyjossue.designsystemlibrary.components.picker.DSPickerImage
-import io.jimmyjossue.designsystemlibrary.components.picker.DSPickerImageUtils
 import io.jimmyjossue.designsystemlibrary.components.selectors.chips.DSChip
 import io.jimmyjossue.designsystemlibrary.components.selectors.chips.staticChips
 import io.jimmyjossue.designsystemlibrary.components.separator.DSSpacer
@@ -44,14 +42,11 @@ import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormSection
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormValue
 import io.jimmyjossue.designsystemlibrary.template.form.model.getValues
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaHigh
-import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
-import io.jimmyjossue.designsystemlibrary.theme.catalog.color
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.theme.catalog.shape
 import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
 import io.jimmyjossue.designsystemlibrary.utils.DSFileType
-import io.jimmyjossue.designsystemlibrary.utils.DSShapeType
 import io.jimmyjossue.designsystemlibrary.utils.asObjectOrNull
 import io.jimmyjossue.designsystemlibrary.utils.doIfItIs
 import io.jimmyjossue.designsystemlibrary.utils.iconOptionsDots
@@ -80,9 +75,7 @@ fun DSForm(
             .fillMaxSize()
             .background(color = colors.background)
             .verticalScroll(state = rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(
-            space = config.spaceSections
-        ),
+        verticalArrangement = Arrangement.spacedBy(space = config.spaceSections),
     ) {
         FormLabel(
             value = title,
@@ -109,25 +102,6 @@ fun DSForm(
                 addButtonText = "Agregar archivos",
                 separationElements = dimension.small
             ),
-        )
-
-        DSPickerImage(
-            modifier = Modifier.padding(horizontal = config.paddingForm),
-            colors = DSPickerImageUtils.getColors(
-                primary = colors.accent,
-                typography = colors.typography,
-                primaryDisabled = colors.primaryDisabled,
-                typographyDisabled = colors.typography.alphaLow,
-                uploadedImageBorder = colors.typography,
-            ),
-            config = DSPickerImageUtils.getConfig(
-                imageShapeType = DSShapeType.Circle,
-                upLoadText = "Agrega tu imagen",
-                supportedExtensionsLabelText = "Formatos soportados",
-                changeText = "Cambiar",
-                maxSizeFile = 123985645L,
-            ),
-            imageFormat = "png",
         )
 
         sections.forEachIndexed { index, section ->
@@ -201,7 +175,7 @@ private fun mdfPadding(bottom: Dp, horizontal: Dp) = Modifier
 private fun mdfPaddingBottom(pd: Dp) = Modifier.padding(bottom = pd)
 
 private enum class Keys {
-    Name, PaternalName, MaternalName, User, Password, LegalAge, Legal, Users, options
+    Name, PaternalName, MaternalName, User, Password, LegalAge, Legal, Users, options, UserImage
 }
 
 @Preview
@@ -280,6 +254,12 @@ fun PreviewDSForm(
                 description = "Escribe los datos personales requeridos para tu cuenta. Estos datos no seran visibles para otros usuarios",
                 withBackground = false,
                 elements = listOf(
+                    DSFormElement.PickerImage(
+                        displayName = "Imagen de perfil",
+                        key = Keys.UserImage.name,
+                        label = "Elige una imagen de perfil",
+                        helper = "Solo puedes elegir 3 opciones como máximo.",
+                    ),
                     DSFormElement.InputChips(
                         options = chips.value,
                         displayName = "Nombre",
