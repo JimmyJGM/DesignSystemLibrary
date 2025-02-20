@@ -6,15 +6,16 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,13 +23,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.jimmyjossue.designsystemlibrary.R
+import io.jimmyjossue.designsystemlibrary.components.button.DSButtonPrimary
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
 import io.jimmyjossue.designsystemlibrary.theme.catalog.color
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.theme.catalog.shape
 import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
+import io.jimmyjossue.designsystemlibrary.utils.DSSizeType
 import io.jimmyjossue.designsystemlibrary.utils.textdecorator.decoratedAnnotatedString
 
 enum class DSCardInfoType {
@@ -36,13 +41,6 @@ enum class DSCardInfoType {
     INFORMATION,
     WARNING,
     ERROR
-}
-
-enum class DSSizeType {
-    SMALL,
-    NORMAL,
-    LARGE,
-    EXTRA_LARGE
 }
 
 @Composable
@@ -76,7 +74,7 @@ fun DSCardInfo(
                 .border(width = 1.dp, color = cardType.getBorderColor().alphaLow, shape = shapeCard)
                 .padding(all = dimension.medium),
             horizontalArrangement = Arrangement.spacedBy(dimension.medium),
-            verticalAlignment = if (lineCount.intValue == 1) Alignment.CenterVertically else Alignment.Top
+            verticalAlignment = if (lineCount.intValue > 1) Alignment.Top else Alignment.CenterVertically
         ) {
             if (icon != null) {
                 Icon(
@@ -93,7 +91,7 @@ fun DSCardInfo(
                 color = cardType.getContentColor(),
                 onTextLayout = {
                     if (lineCount.intValue != it.lineCount) {
-                        lineCount.intValue != it.lineCount
+                        lineCount.intValue = it.lineCount
                     }
                 }
             )
@@ -128,15 +126,73 @@ internal fun DSCardInfoType.getContentColor() = when (this) {
 @Composable
 internal fun DSSizeType.getTypography() = when (this) {
     DSSizeType.SMALL -> typography.caption
-    DSSizeType.NORMAL -> typography.body
-    DSSizeType.LARGE -> typography.title
-    DSSizeType.EXTRA_LARGE -> typography.title
+    else -> typography.body
 }
 
 @Composable
 internal fun DSSizeType.getIconSize() = when (this) {
     DSSizeType.SMALL -> dimension.medium + dimension.smalled.times(2)
     DSSizeType.NORMAL -> dimension.semiLarge
-    DSSizeType.LARGE -> dimension.semiLarge + dimension.smalled.times(2)
-    DSSizeType.EXTRA_LARGE -> dimension.large - dimension.small
+    else -> dimension.large
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewCardInfo() {
+    val sizeState = remember { mutableStateOf(DSSizeType.NORMAL) }
+    val message = "<b>¡Oh, vaya!</b>\nParece que ocurrío un error al obtener tu información en pantalla."
+    fun changeSize() {
+        sizeState.value = when (sizeState.value) {
+            DSSizeType.SMALL -> DSSizeType.NORMAL
+            DSSizeType.NORMAL -> DSSizeType.LARGE
+            DSSizeType.LARGE -> DSSizeType.SMALL
+        }
+    }
+
+    Column(
+        modifier = Modifier.padding(dimension.medium),
+        verticalArrangement = Arrangement.spacedBy(dimension.medium)
+    ) {
+        DSCardInfo(
+            message = message,
+            modifier = Modifier,
+            icon = R.drawable.ic_state_information,
+            cardType = DSCardInfoType.INFORMATION,
+            sizeType = sizeState.value,
+            shapeCard = shape.small,
+            onClick = null
+        )
+        DSCardInfo(
+            message = message,
+            modifier = Modifier,
+            icon = R.drawable.ic_state_success,
+            cardType = DSCardInfoType.SUCCESS,
+            sizeType = sizeState.value,
+            shapeCard = shape.small,
+            onClick = null
+        )
+        DSCardInfo(
+            message = message,
+            modifier = Modifier,
+            icon = R.drawable.ic_state_warning,
+            cardType = DSCardInfoType.WARNING,
+            sizeType = sizeState.value,
+            shapeCard = shape.small,
+            onClick = null
+        )
+        DSCardInfo(
+            message = "message",
+            modifier = Modifier,
+            icon = R.drawable.ic_state_error,
+            cardType = DSCardInfoType.ERROR,
+            sizeType = sizeState.value,
+            shapeCard = shape.small,
+            onClick = null
+        )
+
+        DSButtonPrimary(
+            text = "Cambiar tamaño",
+            onClick = ::changeSize
+        )
+    }
 }

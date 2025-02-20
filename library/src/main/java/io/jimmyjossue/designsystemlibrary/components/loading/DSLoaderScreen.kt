@@ -54,7 +54,7 @@ fun DSLoaderIndeterminateScreen(
     val alphaAnimated = infiniteTransition.dsAnimateAlphaState()
 
     BackHandler(
-        enabled = isEnableBackHandler.not(),
+        enabled = !isEnableBackHandler && isVisible,
         onBack = onClick
     )
 

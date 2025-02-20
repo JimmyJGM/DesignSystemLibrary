@@ -12,11 +12,15 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.State
 import io.jimmyjossue.designsystemlibrary.components.card.DSCardInfoType
-import io.jimmyjossue.designsystemlibrary.components.card.DSSizeType
 import io.jimmyjossue.designsystemlibrary.components.card.DSSnackBarVisuals
 import io.jimmyjossue.designsystemlibrary.components.dialog.model.DSDialogContent
+import io.jimmyjossue.designsystemlibrary.utils.DSSizeType
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class DSScreenActions @OptIn(ExperimentalMaterial3Api::class) constructor(
@@ -26,7 +30,11 @@ class DSScreenActions @OptIn(ExperimentalMaterial3Api::class) constructor(
     internal val scrollBehavior: TopAppBarScrollBehavior,
     internal val focusManager: FocusManager,
 ) {
-    val dialogContent: MutableState<DSDialogContent?> = mutableStateOf(null)
+    //private val _dialogContent = mutableStateOf<DSDialogContent?>(null)
+    //val dialogContent: State = _dialogContent
+
+    private val _dialogContent = MutableStateFlow<DSDialogContent?>(null)
+    val dialogContent: StateFlow<DSDialogContent?> = _dialogContent.asStateFlow()
 
     fun showSnack(
         duration: SnackbarDuration = SnackbarDuration.Short,
@@ -63,10 +71,14 @@ class DSScreenActions @OptIn(ExperimentalMaterial3Api::class) constructor(
     }
 
     fun showDialog(content: DSDialogContent) {
-        dialogContent.value = content
+        coroutineScope.launch {
+            _dialogContent.emit(content)
+        }
     }
 
     fun hideDialog() {
-        dialogContent.value = null
+        coroutineScope.launch {
+            _dialogContent.emit(null)
+        }
     }
 }

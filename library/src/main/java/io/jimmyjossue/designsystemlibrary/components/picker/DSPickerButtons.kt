@@ -77,8 +77,7 @@ internal fun DSPickerButtonChange(
         onClick = onClick,
         isEnabled = isEnabled,
         icon = null,
-        cornerRadius = radius.large - radius.small,
-        borderType = DSButtonBorderType.Line,
+        borderType = DSButtonBorderType.None,
         contentPadding = PaddingValues(
             horizontal = dimension.medium,
             vertical = dimension.small,
@@ -151,7 +150,6 @@ internal fun DSPickerFileUniqueButtonAdd(
 private fun PreviewDSPickerButtonOrderName() {
     val isEnabled = true
     val onClick = { }
-
     Column(
         verticalArrangement = Arrangement.spacedBy(dimension.smalled)
     ) {

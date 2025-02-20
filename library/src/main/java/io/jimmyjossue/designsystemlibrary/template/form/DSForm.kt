@@ -100,6 +100,7 @@ fun DSForm(
                 contentPaddingParent = dimension.none,
                 contentPaddingItem = config.paddingElements,
                 addButtonText = "Agregar archivos",
+                deleteButtonText = "Borrar todos",
                 separationElements = dimension.small
             ),
         )
@@ -170,9 +171,6 @@ fun DSForm(
 private fun mdfPadding(bottom: Dp, horizontal: Dp) = Modifier
     .padding(bottom = bottom)
     .padding(horizontal = horizontal)
-
-@SuppressLint("ModifierFactoryExtensionFunction")
-private fun mdfPaddingBottom(pd: Dp) = Modifier.padding(bottom = pd)
 
 private enum class Keys {
     Name, PaternalName, MaternalName, User, Password, LegalAge, Legal, Users, options, UserImage
@@ -259,6 +257,9 @@ fun PreviewDSForm(
                         key = Keys.UserImage.name,
                         label = "Elige una imagen de perfil",
                         helper = "Solo puedes elegir 3 opciones como máximo.",
+                        changeText = "Cambiar imagen",
+                        upLoadText = "Agregar imagen",
+                        supportedExtensionsLabelText = "Formato de imagen soportado"
                     ),
                     DSFormElement.InputChips(
                         options = chips.value,

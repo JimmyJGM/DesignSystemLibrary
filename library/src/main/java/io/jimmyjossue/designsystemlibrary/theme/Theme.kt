@@ -29,7 +29,7 @@ import io.jimmyjossue.designsystemlibrary.theme.catalog.color
 import io.jimmyjossue.designsystemlibrary.theme.catalog.localTypography
 
 @Composable
-fun AppTheme(
+fun DSAppTheme(
     colors: DSColors = DSColors(),
     shapes: DSShapes = DSShapes(),
     radius: DSRadius = DSRadius(),

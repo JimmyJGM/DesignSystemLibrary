@@ -31,6 +31,7 @@ import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaSemiLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.color
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
+import io.jimmyjossue.designsystemlibrary.utils.DSSizeType
 import io.jimmyjossue.designsystemlibrary.utils.textdecorator.decoratedAnnotatedString
 
 internal data class DSSnackBarVisuals(
@@ -46,13 +47,13 @@ internal data class DSSnackBarVisuals(
 ) : SnackbarVisuals
 
 @Composable
-internal fun screenSnackBar(hostState: SnackbarHostState) = @Composable {
-    SnackbarHost(hostState = hostState) {
+internal fun screenSnackBar(hostState: SnackbarHostState?) = @Composable {
+    SnackbarHost(hostState = hostState ?: remember { SnackbarHostState() }) {
         val lineCount = remember { mutableIntStateOf(1) }
         val visuals = it.visuals as DSSnackBarVisuals
 
         Snackbar(
-            containerColor = color.surface.copy(alpha = 0.85f),
+            containerColor = color.surface.copy(alpha = 0.9f),
             contentColor = visuals.cardType.getContentColor(),
             shape = visuals.cardShape,
             modifier = Modifier

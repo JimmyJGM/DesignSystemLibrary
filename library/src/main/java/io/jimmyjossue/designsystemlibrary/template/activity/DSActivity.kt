@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import io.jimmyjossue.designsystemlibrary.template.activity.model.DSActivityArgs
-import io.jimmyjossue.designsystemlibrary.theme.AppTheme
+import io.jimmyjossue.designsystemlibrary.theme.DSAppTheme
 import io.jimmyjossue.designsystemlibrary.theme.catalog.DSColors
 import io.jimmyjossue.designsystemlibrary.theme.catalog.DSDimensions
 import io.jimmyjossue.designsystemlibrary.theme.catalog.DSRadius
@@ -61,7 +61,7 @@ abstract class DSActivity : ComponentActivity() {
 
     private fun setContent(args: DSActivityArgs) {
         setContent {
-            AppTheme(
+            DSAppTheme(
                 colors = getColors(),
                 shapes = getShapes(),
                 radius = getRadius(),

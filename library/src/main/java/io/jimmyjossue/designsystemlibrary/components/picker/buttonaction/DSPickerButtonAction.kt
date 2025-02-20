@@ -67,6 +67,7 @@ internal fun DSPickerButtonAction(
                         DSButtonBorderType.None -> Modifier
                     }
                 )
+                .clip(shape = RoundedCornerShape(size = cornerRadius))
                 .background(
                     color = getBackgroundColor(),
                     shape = RoundedCornerShape(size = cornerRadius)
@@ -84,7 +85,7 @@ internal fun DSPickerButtonAction(
             if (!text.isNullOrBlank()) {
                 Text(
                     text = text,
-                    style = typography.body.medium,
+                    style = typography.caption.medium,
                     color = getContentColor()
                 )
             }

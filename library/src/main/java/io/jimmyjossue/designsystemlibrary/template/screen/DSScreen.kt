@@ -14,7 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -26,11 +26,14 @@ import io.jimmyjossue.designsystemlibrary.components.card.screenSnackBar
 import io.jimmyjossue.designsystemlibrary.components.dialog.DSDialog
 import io.jimmyjossue.designsystemlibrary.components.loading.DSLoaderIndeterminateScreen
 import io.jimmyjossue.designsystemlibrary.template.screen.DSScreenUtils.toTopBarColors
+import io.jimmyjossue.designsystemlibrary.template.screen.model.DSLoader
 import io.jimmyjossue.designsystemlibrary.template.screen.model.DSScreenColors
-import io.jimmyjossue.designsystemlibrary.template.screen.model.DSScreenLoader
+import io.jimmyjossue.designsystemlibrary.template.screen.model.DSScreenLoaderState
 import io.jimmyjossue.designsystemlibrary.template.screen.model.DSScreenScope
 import io.jimmyjossue.designsystemlibrary.template.screen.model.DSScreenTopBar
 import io.jimmyjossue.designsystemlibrary.template.screen.model.DSScrollBehaviorType
+import io.jimmyjossue.designsystemlibrary.template.screen.model.DSScrollBehaviorType.PINNED
+import io.jimmyjossue.designsystemlibrary.template.screen.model.rememberScreenLoaderState
 import io.jimmyjossue.designsystemlibrary.template.screen.model.screenTopBar
 import io.jimmyjossue.designsystemlibrary.template.screen.model.toScrollBehavior
 
@@ -42,9 +45,8 @@ private val defaultModifier = Modifier.fillMaxSize()
 fun DSScreen(
     modifier: Modifier = defaultModifier,
     topBar: DSScreenTopBar? = null,
-    isLoading: Boolean = false,
-    loader: DSScreenLoader = DSScreenLoader(),
-    scrollBehaviorType: DSScrollBehaviorType = DSScrollBehaviorType.PINNED,
+    loaderState: DSScreenLoaderState = rememberScreenLoaderState(),
+    scrollBehaviorType: DSScrollBehaviorType = PINNED,
     colors: DSScreenColors = DSScreenUtils.getColors(),
     content: @Composable (DSScreenScope) -> Unit
 ) {
@@ -56,55 +58,81 @@ fun DSScreen(
         keyboardController = LocalSoftwareKeyboardController.current
     )
 
-    val scope = object : DSScreenScope {
-        override fun getColors() = colors
-        override fun getActions() = actions
-    }
-
-    LaunchedEffect(isLoading) {
-        if (isLoading) {
-            scope.getActions().hideKeyboard()
+    CompositionLocalProvider(
+        value = LocalScreenScope provides object : DSScreenScope {
+            override fun getColors() = colors
+            override fun getActions() = actions
         }
-    }
-
-    CompositionLocalProvider(LocalScreenScope provides scope) {
-        Scaffold(
-            modifier = modifier
-                .background(color = scope.getColors().background)
-                .nestedScroll(connection = scope.getActions().scrollBehavior.nestedScrollConnection)
-                .getScreenStatusBarPaddings(haveTopBar = topBar != null)
-                .getScreenNavBarPaddings(haveNavBar = false)
-                .imePadding(),
-            snackbarHost = screenSnackBar(hostState = scope.getActions().snackbarHostState),
-            contentWindowInsets = WindowInsets.safeDrawing,
-            containerColor = scope.getColors().background,
-            contentColor = scope.getColors().content,
-            topBar = screenTopBar(
-                scrollBehavior = scope.getActions().scrollBehavior,
-                colors = scope.getColors().toTopBarColors(),
-                model = topBar,
-            ),
+    ) {
+        DSScreenContent(
+            modifier = modifier,
+            topBar = topBar,
+            colors = colors,
             content = {
-                Box(
-                    modifier = Modifier.padding(it),
-                    content = { content(scope) }
+                content(
+                    object : DSScreenScope {
+                        override fun getColors() = colors
+                        override fun getActions() = actions
+                    }
                 )
             }
         )
 
-        scope.getActions().dialogContent.value?.let { dialogContent ->
-            DSDialog(
-                content = dialogContent,
-                onDismiss = { scope.getActions().hideDialog() }
-            )
-        }
-
         DSLoaderIndeterminateScreen(
-            isVisible = isLoading,
-            text = loader.text,
+            text = loaderState.state.value.text,
+            isVisible = loaderState.state.value.isLoading,
+            isEnableBackHandler = loaderState.state.value.isEnableBack,
             primaryColor = colors.loaderPrimary,
             backgroundColor = colors.loaderBackground,
-            isEnableBackHandler = loader.isEnableBackHandler,
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DSScreenContent(
+    modifier: Modifier,
+    topBar: DSScreenTopBar? = null,
+    colors: DSScreenColors = DSScreenUtils.getColors(),
+    content: @Composable () -> Unit
+) {
+    val scope = LocalScreenScope.current
+
+    Scaffold(
+        modifier = modifier
+            .background(color = colors.background)
+            .then(
+                when (scope != null) {
+                    true -> Modifier.nestedScroll(
+                        connection = scope.getActions().scrollBehavior.nestedScrollConnection
+                    )
+                    false -> Modifier
+                }
+            )
+            .getScreenStatusBarPaddings(haveTopBar = topBar != null)
+            .getScreenNavBarPaddings(haveNavBar = false)
+            .imePadding(),
+        snackbarHost = screenSnackBar(hostState = scope?.getActions()?.snackbarHostState),
+        contentWindowInsets = WindowInsets.safeDrawing,
+        containerColor = colors.background,
+        contentColor = colors.content,
+        topBar = screenTopBar(
+            scrollBehavior = scope?.getActions()?.scrollBehavior ?: PINNED.toScrollBehavior(),
+            colors = colors.toTopBarColors(),
+            model = topBar,
+        ),
+        content = {
+            Box(
+                modifier = Modifier.padding(it),
+                content = { content() }
+            )
+        }
+    )
+
+    scope?.getActions()?.dialogContent?.collectAsState()?.value?.let { dialogContent ->
+        DSDialog(
+            content = dialogContent,
+            onDismiss = { scope.getActions().hideDialog() }
         )
     }
 }

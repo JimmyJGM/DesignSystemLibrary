@@ -18,4 +18,16 @@ data class DSPickerImageColors(
                 && uploadedImageBorder != Transparent
                 && uploadedImageBorder != Unspecified
     }
+
+    fun getPrimary(isEnabled: Boolean): Color {
+        return if (isEnabled) primary else primaryDisabled
+    }
+
+    fun getContainer(isEnabled: Boolean): Color {
+        return if (isEnabled) container else primaryDisabled
+    }
+
+    fun getTypography(isEnabled: Boolean): Color {
+        return if (isEnabled) typography else typographyDisabled
+    }
 }

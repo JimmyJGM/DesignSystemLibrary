@@ -47,7 +47,6 @@ internal fun DSPickerImageUpload(
             color = colors.uploadedImageBorder!!,
             shape = imageShape,
         )
-
         false -> Modifier
     }
 

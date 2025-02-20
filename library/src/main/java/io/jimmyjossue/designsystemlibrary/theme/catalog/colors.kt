@@ -20,13 +20,13 @@ data class DSColors(
     val typography: Color = Color(0xFF060708),
     val typographyDisabled: Color = Color(0xFF55585E),
     val success: Color = Color(0xFF28D570),
-    val successSurface: Color = Color(0xFFABFCBF),
+    val successSurface: Color = Color(0xFFD7FFDA),
     val successContent: Color = Color(0xFF006F22),
     val warning: Color = Color(0xFFE9A827),
-    val warningSurface: Color = Color(0xFFFFE8BB),
+    val warningSurface: Color = Color(0xFFFEEDCC),
     val warningContent: Color = Color(0xFF9D6800),
     val error: Color = Color(0xFFE52A2A),
-    val errorSurface: Color = Color(0xFFFFCECE),
+    val errorSurface: Color = Color(0xFFFFDEDE),
     val errorContent: Color = Color(0xFF8A0000),
 )
 
