@@ -4,10 +4,9 @@ import androidx.compose.ui.graphics.Color
 
 data class DSBottomBarColors(
     val background: Color,
-    val surface: Color,
-    val typography: Color,
-    val selected: Color,
+    val iconUnselected: Color,
+    val iconSelected: Color,
+    val selectionMark: Color,
     val notification: Color,
-    val selectedSurface: Color,
     val outline: Color,
 )
