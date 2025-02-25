@@ -15,4 +15,5 @@ internal const val descriptionOfApp = "Este es un modulo de una libreria de comp
 internal val iconBack = R.drawable.ic_navigation_back
 internal val iconSearch = R.drawable.ic_system_search
 internal val iconOptionsDots = R.drawable.ic_system_options_dots
-internal val iconNotification = R.drawable.ic_system_notification
+internal val iconNotification = R.drawable.ds_ic_system_notification_light
+internal val iconPerson = R.drawable.ds_ic_system_person_light

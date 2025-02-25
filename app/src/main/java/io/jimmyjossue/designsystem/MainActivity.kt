@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.RangeSlider
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,15 +31,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.jimmyjossue.designsystemlibrary.R.drawable
-import io.jimmyjossue.designsystemlibrary.components.bottombar.PreviewBottomBar
 import io.jimmyjossue.designsystemlibrary.components.card.DSCardInfoType
 import io.jimmyjossue.designsystemlibrary.components.dialog.model.DSDialogButton
 import io.jimmyjossue.designsystemlibrary.components.dialog.model.DSDialogContent
 import io.jimmyjossue.designsystemlibrary.components.dialog.model.DSDialogOption
 import io.jimmyjossue.designsystemlibrary.components.loading.DSDotsLoadingAnimation
 import io.jimmyjossue.designsystemlibrary.components.separator.DSSpacer
+import io.jimmyjossue.designsystemlibrary.components.slider.model.DSSlider
 import io.jimmyjossue.designsystemlibrary.components.topBar.DSTopBarAction
 import io.jimmyjossue.designsystemlibrary.components.topBar.DSTopBarNavigation
+import io.jimmyjossue.designsystemlibrary.components.topBar.dsTopBarNavigationBack
 import io.jimmyjossue.designsystemlibrary.template.activity.DSActivity
 import io.jimmyjossue.designsystemlibrary.template.activity.model.DSActivityArgs
 import io.jimmyjossue.designsystemlibrary.template.form.DSFormUtils
@@ -80,23 +79,18 @@ class MainActivity : DSActivity() {
             loaderState.hideLoader()
         }
 
-        PreviewBottomBar(
-            title = "Navega sin limites...",
-            buttonText = "Agregar un datos chidongongo",
-            onClick = ::launchSecondActivity,
-        )
-
-        /*
         DSScreen(
             loaderState = loaderState,
             colors = DSScreenUtils.getColors(
-                background = color.primarySurface
+                background = color.primarySurface,
+                topBarBackground = color.primarySurface,
+
             ),
             topBar = DSScreenTopBar(
-                title = null,
+                title = "Crea tu perfil para la aplicacion",
                 subtitle = null,
                 image = null,
-                navigation = null,
+                navigation = dsTopBarNavigationBack {  },
                 actionsWithContentTint = true,
                 actions = emptyList(),
             )
@@ -108,37 +102,39 @@ class MainActivity : DSActivity() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                //Btn(text = "Open form!!!", onClick = ::launchSecondActivity)
-                //Btn(text = "loadder", onClick = loaderState::showLoader)
+                Btn(text = "Open form!!!", onClick = ::launchSecondActivity)
+                DSSpacer(size = 16.dp)
+                Btn(text = "loadder", onClick = loaderState::showLoader)
+
                 DSSpacer(size = 24.dp)
 
                 DSDotsLoadingAnimation(
                     travelDistance = travelDistance.floatValue.roundSliderValue().dp,
                     dotsSize = sizeDots.floatValue.roundSliderValue().dp,
-                    dotsSpace = spaceDots.floatValue.roundSliderValue().dp
+                    dotsSpace = spaceDots.floatValue.roundSliderValue().dp,
+                    durationMillis = 2000,
                 )
 
                 DSSpacer(size = 96.dp)
                 Text(text = "travel distance: ${travelDistance.floatValue.roundSliderValue()}.dp")
-                Slider(
+                DSSlider(
                     value = travelDistance.floatValue,
                     onValueChange = { travelDistance.floatValue = it }
                 )
                 DSSpacer(size = 8.dp)
                 Text(text = "sizeDots: ${sizeDots.floatValue.roundSliderValue()}.dp")
-                Slider(
+                DSSlider(
                     value = sizeDots.floatValue,
                     onValueChange = { sizeDots.floatValue = it }
                 )
                 DSSpacer(size = 8.dp)
                 Text(text = "spaceDots: ${spaceDots.floatValue.roundSliderValue()}.dp")
-                Slider(
+                DSSlider(
                     value = spaceDots.floatValue,
                     onValueChange = { spaceDots.floatValue = it }
                 )
             }
         }
-        */
     }
 
     fun Float.roundSliderValue() = when (this == 1F) {
@@ -295,7 +291,6 @@ private fun Screen(
             ),
             navigation = DSTopBarNavigation(
                 icon = drawable.ic_navigation_back,
-                //onClick = activity::finish
                 onClick = {
                     onShowDialog((1..5).random())
                 }
@@ -326,43 +321,4 @@ private fun ScreenContent(
         onSubmit = onShowLoader,
         colors = colors
     )
-}
-
-@Preview(backgroundColor = 0xFFF, showBackground = true)
-@Composable
-private fun PreviewText() {
-    var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
-
-    val pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f)
-    Column(
-        modifier = Modifier.padding(16.dp)
-    ) {
-        Text(
-            modifier = Modifier.drawBehind {
-                val strokeWidthPx = 1.dp.toPx()
-                val verticalOffset = size.height - 2.sp.toPx()
-                drawLine(
-                    color = Color.Magenta,
-                    strokeWidth = strokeWidthPx,
-                    start = Offset(0f, verticalOffset),
-                    end = Offset(size.width, verticalOffset),
-                    pathEffect = pathEffect
-                )
-            },
-            text = "i izu gxosg cou dou oudho cvgoudhoufdg vcoud ogdcou odov hflg ouhfou vod hofoc hochoufouof!!!"
-        )
-        Text(
-            text = buildAnnotatedString {
-                append("enlace ")
-                withStyle(
-                    style = SpanStyle(
-                        textDecoration = TextDecoration.Underline,
-                        color = Color.Red
-                    )
-                ) {
-                    append("click her!!!")
-                }
-            }
-        )
-    }
 }

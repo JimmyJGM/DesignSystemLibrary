@@ -20,7 +20,7 @@ object DSPickerImageUtils {
         maxSizeLabelText: String? = null,
         maxSizeFile: Long = Long.MAX_VALUE,
         cornerRadius: Dp = dimension.small,
-        contentPadding: Dp = dimension.semiLarge,
+        contentPadding: Dp = dimension.large,
         imageShapeType: DSShapeType = DSShapeType.Rectangle,
         imageContentScale: ContentScale = ContentScale.Crop,
         withRemoveButton: Boolean = true,

@@ -14,10 +14,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.jimmyjossue.designsystemlibrary.R
-import io.jimmyjossue.designsystemlibrary.components.button.DSButtonIcon
 import io.jimmyjossue.designsystemlibrary.components.button.DSButtonPrimary
 import io.jimmyjossue.designsystemlibrary.components.button.DSButtonSecondary
 import io.jimmyjossue.designsystemlibrary.components.button.DSButtonUtils
+import io.jimmyjossue.designsystemlibrary.components.button.model.DSButtonIcon
 import io.jimmyjossue.designsystemlibrary.components.separator.DSSpacerFilled
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaHigh
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLower
@@ -50,9 +50,8 @@ internal fun OnboardingButtons(
                 text = stringResource(id = R.string.ds_onboarding_btn_skip),
                 onClick = onFinish,
                 modifier = Modifier.height(53.dp),
-                contentPadding = PaddingValues(horizontal = dimension.medium),
-                shapeButton = shape.semiLarge,
-                colors = DSButtonUtils.getButtonPrimaryColors(
+                shape = shape.semiLarge,
+                colors = DSButtonUtils.getPrimaryColors(
                     content = contentColor.alphaHigh,
                     background = contentColor.alphaLower
                 ),
@@ -62,10 +61,9 @@ internal fun OnboardingButtons(
         if (pageCurrent > 0) {
             DSButtonSecondary(
                 onClick = onPrevious,
-                shapeButton = shape.semiLarge,
-                contentPadding = PaddingValues(dimension.medium, dimension.small),
+                shape = shape.semiLarge,
                 icon = DSButtonIcon(icon = R.drawable.ic_navigation_back),
-                colors = DSButtonUtils.getButtonSecondaryColors(
+                colors = DSButtonUtils.getSecondaryColors(
                     background = backgroundColor.alphaLower,
                     border = Color.Transparent,
                     content = backgroundColor,
@@ -105,12 +103,8 @@ private fun OnboardingButtonPrimary(
             )
             .height(height = 53.dp)
             .animateContentSize(),
-        shapeButton = shape.semiLarge,
-        contentPadding = PaddingValues(
-            horizontal = dimension.medium.plus(dimension.small),
-            vertical = dimension.smalled.times(7),
-        ),
-        colors = DSButtonUtils.getButtonPrimaryColors(
+        shape = shape.semiLarge,
+        colors = DSButtonUtils.getPrimaryColors(
             background = backgroundColor,
             content = onBackgroundColor,
         ),

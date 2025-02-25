@@ -93,7 +93,7 @@ fun DSToggleSwitch(
                 .padding(
                     all = when (isSelected) {
                         true -> borderWidth
-                        false -> borderWidth.plus(1.5.dp)
+                        false -> borderWidth.plus(2.5.dp)
                     }
                 )
                 .clip(shape = CircleShape)

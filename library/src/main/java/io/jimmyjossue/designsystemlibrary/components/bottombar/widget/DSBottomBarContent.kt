@@ -24,9 +24,11 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import io.jimmyjossue.designsystemlibrary.components.bottombar.DSBottomBarUtils
 import io.jimmyjossue.designsystemlibrary.components.bottombar.model.DSBottomBarColors
+import io.jimmyjossue.designsystemlibrary.components.bottombar.model.DSBottomBarConfig
 import io.jimmyjossue.designsystemlibrary.components.bottombar.model.DSBottomBarIcon
 import io.jimmyjossue.designsystemlibrary.components.separator.DSSpacerFilled
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
@@ -57,6 +59,7 @@ internal fun RowScope.BottomItemExpandable(
 internal fun BottomTopMark(
     selectedItemId: String,
     items: List<DSBottomBarIcon>,
+    config: DSBottomBarConfig,
     colors: DSBottomBarColors = DSBottomBarUtils.getColors(),
     onClick: (String) -> Unit,
 ) {
@@ -109,10 +112,16 @@ internal fun BottomTopMark(
             content = {
                 Box(
                     modifier = Modifier
-                        .graphicsLayer { translationX = positionX }
+                        .graphicsLayer {
+                            val margin = with(density) {
+                                config.margin.calculateLeftPadding(LayoutDirection.Ltr).toPx()
+                            }
+                            val markPositionX = positionX - margin
+                            translationX = markPositionX
+                        }
                         .background(color = colors.selectionMark, CircleShape)
                         .size(
-                            height = 6.dp,
+                            height = 4.dp,
                             width = with(density) {
                                 val padding = DSBottomBarUtils.itemPadding * 4
                                 width.value.width.toDp() - padding

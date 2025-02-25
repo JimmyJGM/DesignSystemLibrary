@@ -3,7 +3,7 @@ package io.jimmyjossue.designsystemlibrary.template.form
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
-import io.jimmyjossue.designsystemlibrary.components.button.DSButtonPrimaryColors
+import io.jimmyjossue.designsystemlibrary.components.button.model.DSButtonPrimaryColors
 import io.jimmyjossue.designsystemlibrary.components.input.DSInputUtils
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormColors
 import io.jimmyjossue.designsystemlibrary.template.form.model.DSFormConfig

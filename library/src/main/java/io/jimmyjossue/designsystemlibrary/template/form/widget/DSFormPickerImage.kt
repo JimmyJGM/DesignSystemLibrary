@@ -35,7 +35,7 @@ internal fun DSFormPickerImage(
             primary = colors.primary,
             primaryDisabled = colors.primaryDisabled,
             onPrimary = colors.onPrimary,
-            container = colors.background,
+            container = colors.surface,
             typography = colors.typography,
             typographyDisabled = colors.typography.alphaSemiLow,
             uploadedImageBorder = colors.accent,

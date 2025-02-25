@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -23,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import io.jimmyjossue.designsystemlibrary.R
 import io.jimmyjossue.designsystemlibrary.components.picker.model.DSPickerImageConfig
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaHigh
-import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
@@ -48,12 +48,12 @@ internal fun DSPickerImageEmptySelector(
             .clip(shape = RoundedCornerShape(size = cornerRadius))
             .clickable(enabled = isEnabled, onClick = onClick)
             .borderDashed(
-                width = 2.dp,
-                color = colorContainer.alphaHigh,
+                width = 4.dp,
+                color = colorContainer,
                 cornerRadius = cornerRadius
             )
             .background(
-                color = colorContainer.alphaLow,
+                color = colorContainer.alphaHigh,
                 shape = RoundedCornerShape(size = cornerRadius)
             )
             .padding(all = contentPadding)

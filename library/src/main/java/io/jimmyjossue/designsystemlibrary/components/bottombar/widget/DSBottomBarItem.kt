@@ -58,7 +58,7 @@ internal fun BottomBarItemExpandable(
             .clickable(
                 role = Role.Tab,
                 indication = ripple(
-                    color = colors.iconSelected.alphaLower,
+                    color = colors.itemSelected.alphaLower,
                     bounded = false,
                 ),
                 interactionSource = remember { MutableInteractionSource() },
@@ -88,7 +88,7 @@ internal fun BottomBarItemExpandable(
                     maxLines = 1,
                     style = typography.caption,
                     overflow = TextOverflow.Ellipsis,
-                    color = colors.iconSelected,
+                    color = colors.itemSelected,
                     modifier = Modifier
                         .widthIn(max = dimension.extraLarge)
                         .padding(end = dimension.small)

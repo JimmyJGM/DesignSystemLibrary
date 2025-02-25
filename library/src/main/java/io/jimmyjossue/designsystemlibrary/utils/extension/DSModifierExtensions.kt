@@ -1,8 +1,12 @@
 package io.jimmyjossue.designsystemlibrary.utils.extension
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawBehind
@@ -14,6 +18,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -66,5 +71,22 @@ fun Modifier.borderDashed(
             cornerRadius = CornerRadius(cornerRadiusPx, cornerRadiusPx)
         )
     }
+}
+
+
+@SuppressLint("UnnecessaryComposedModifier")
+fun Modifier.dsClick(
+    role: Role = Role.Button,
+    isEnabled: Boolean,
+    onClick: () -> Unit,
+): Modifier = composed {
+    val interaction = remember { MutableInteractionSource() }
+    clickable(
+        interactionSource = interaction,
+        indication = ripple(),
+        enabled = isEnabled,
+        onClick = onClick,
+        role = role,
+    )
 }
 

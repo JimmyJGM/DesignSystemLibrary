@@ -41,6 +41,7 @@ import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaSemiLow
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
 import io.jimmyjossue.designsystemlibrary.theme.catalog.shape
 import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
+import io.jimmyjossue.designsystemlibrary.utils.extension.borderBottom
 import io.jimmyjossue.designsystemlibrary.utils.onClick
 import io.jimmyjossue.designsystemlibrary.utils.textdecorator.decoratedAnnotatedString
 
@@ -59,9 +60,8 @@ internal fun DSDialogQuestion(
             text = cancelButton.text,
             isEnabled = cancelButton.isEnabled,
             modifier = Modifier.weight(weight = 1f),
-            contentPadding = DSButtonUtils.getContentPadding(),
-            shapeButton = shape.small,
-            colors = DSButtonUtils.getButtonSecondaryColors(
+            shape = shape.small,
+            colors = DSButtonUtils.getSecondaryColors(
                 content = colors.typography.alphaHigh,
                 border = colors.typography.alphaLow
             ),
@@ -74,8 +74,8 @@ internal fun DSDialogQuestion(
             text = confirmButton.text,
             isEnabled = confirmButton.isEnabled,
             modifier = Modifier.weight(weight = 1f),
-            contentPadding = DSButtonUtils.getContentPadding(),
-            colors = DSButtonUtils.getButtonPrimaryColors(
+            shape = shape.small,
+            colors = DSButtonUtils.getPrimaryColors(
                 content = colors.onPrimary,
                 background = colors.primary,
                 contentDisabled = colors.primaryDisabled,
@@ -107,14 +107,9 @@ internal fun DSDialogOptions(
                 option = option,
                 type = data.type,
                 colors = colors,
+                isLast = index < data.options.lastIndex,
                 onClick = { selected.value = option }
             )
-            if (index != data.options.lastIndex) {
-                DSDividerHorizontal(
-                    modifier = Modifier.padding(horizontal = dimension.small),
-                    lineColor = colors.surface
-                )
-            }
         }
     }
     DSDialogQuestion(
@@ -133,6 +128,7 @@ private fun DialogOptionItem(
     option: DSDialogOption,
     colors: DSDialogColors,
     type: DSDialogOptionType,
+    isLast: Boolean = false,
     onClick: (DSDialogOption) -> Unit
 ) {
     fun Boolean.getIcon() = if (this) R.drawable.ds_ic_system_radio_on_light else R.drawable.ds_ic_system_radio_off_light
@@ -141,6 +137,10 @@ private fun DialogOptionItem(
     fun Boolean.getColor() = if (this) colors.primary else colors.typography
 
     Button(
+        modifier = when (isLast) {
+            true -> Modifier.borderBottom(color = colors.surface)
+            false -> Modifier
+        },
         onClick = { onClick(option) },
         shape = shape.smalled,
         contentPadding = PaddingValues(horizontal = dimension.smalled, vertical = dimension.small),

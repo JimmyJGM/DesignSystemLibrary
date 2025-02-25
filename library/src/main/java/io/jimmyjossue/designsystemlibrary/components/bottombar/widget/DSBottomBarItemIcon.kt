@@ -38,7 +38,7 @@ internal fun BottomBarItemIcon(
         Icon(
             contentDescription = null,
             painter = painterResource(id = model.getIcon(isSelected = isSelected)),
-            tint = if (isSelected) colors.iconSelected else colors.iconUnselected.alphaMedium,
+            tint = if (isSelected) colors.itemSelected else colors.itemUnselected.alphaMedium,
             modifier = Modifier
                 .size(size = sizeIcon)
         )

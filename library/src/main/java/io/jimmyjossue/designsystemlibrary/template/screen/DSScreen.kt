@@ -121,6 +121,9 @@ private fun DSScreenContent(
             colors = colors.toTopBarColors(),
             model = topBar,
         ),
+        bottomBar = {
+
+        },
         content = {
             Box(
                 modifier = Modifier.padding(it),

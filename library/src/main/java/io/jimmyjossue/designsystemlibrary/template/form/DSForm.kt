@@ -24,8 +24,6 @@ import io.jimmyjossue.designsystemlibrary.R
 import io.jimmyjossue.designsystemlibrary.components.button.DSButtonPrimary
 import io.jimmyjossue.designsystemlibrary.components.input.DSInputIcon
 import io.jimmyjossue.designsystemlibrary.components.input.config.DSKeyboardType
-import io.jimmyjossue.designsystemlibrary.components.picker.DSPickerFile
-import io.jimmyjossue.designsystemlibrary.components.picker.DSPickerFileUtils
 import io.jimmyjossue.designsystemlibrary.components.selectors.chips.DSChip
 import io.jimmyjossue.designsystemlibrary.components.selectors.chips.staticChips
 import io.jimmyjossue.designsystemlibrary.components.separator.DSSpacer
@@ -44,12 +42,10 @@ import io.jimmyjossue.designsystemlibrary.template.form.model.getValues
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaHigh
 import io.jimmyjossue.designsystemlibrary.theme.catalog.alphaMedium
 import io.jimmyjossue.designsystemlibrary.theme.catalog.dimension
-import io.jimmyjossue.designsystemlibrary.theme.catalog.shape
 import io.jimmyjossue.designsystemlibrary.theme.catalog.typography
-import io.jimmyjossue.designsystemlibrary.utils.DSFileType
 import io.jimmyjossue.designsystemlibrary.utils.asObjectOrNull
 import io.jimmyjossue.designsystemlibrary.utils.doIfItIs
-import io.jimmyjossue.designsystemlibrary.utils.iconOptionsDots
+import io.jimmyjossue.designsystemlibrary.utils.iconPerson
 import io.jimmyjossue.designsystemlibrary.utils.isNotNull
 import io.jimmyjossue.designsystemlibrary.utils.toBooleanOrNull
 import io.jimmyjossue.designsystemlibrary.utils.toIntOrNull
@@ -84,25 +80,6 @@ fun DSForm(
             modifier = Modifier
                 .padding(horizontal = config.paddingForm)
                 .padding(top = config.paddingForm)
-        )
-        DSPickerFile(
-            modifier = Modifier.padding(horizontal = config.paddingForm),
-            type = DSFileType.Image,
-            title = "Elige los archivos",
-            subtitle = "Los archivos que se eligan no deben de exeder el tamaño de 54 MB por cada uno.",
-            containerShape = shape.small,
-            colors = DSPickerFileUtils.getColors(
-                background = colors.background,
-                surface = colors.surface
-            ),
-            config = DSPickerFileUtils.getConfig(
-                maxFiles = 7,
-                contentPaddingParent = dimension.none,
-                contentPaddingItem = config.paddingElements,
-                addButtonText = "Agregar archivos",
-                deleteButtonText = "Borrar todos",
-                separationElements = dimension.small
-            ),
         )
 
         sections.forEachIndexed { index, section ->
@@ -243,7 +220,7 @@ fun PreviewDSForm(
                     "${value.key}: ${value.value}"
                 },
             )
-            Log.d("fromOnSubmit", "data: $values",)
+            Log.d("fromOnSubmit", "data: $values")
             onSubmit()
         },
         sections = listOf(
@@ -273,7 +250,7 @@ fun PreviewDSForm(
                         key = Keys.Name.name,
                         value = nameState.value,
                         keyboardType = DSKeyboardType.Uri,
-                        trailingIcon = DSInputIcon(iconOptionsDots),
+                        leadingIcon = DSInputIcon(iconPerson),
                         displayName = "Nombre",
                         label = "Nombre",
                         hint = "Escribe tu nombre"
@@ -281,6 +258,7 @@ fun PreviewDSForm(
                     InputText(
                         key = Keys.PaternalName.name,
                         value = paternalNameState.value,
+                        leadingIcon = DSInputIcon(iconPerson),
                         displayName = "Apellido paterno",
                         label = "Apellido paterno",
                         hint = "Escribe tu ppellido paterno"
@@ -288,6 +266,7 @@ fun PreviewDSForm(
                     InputText(
                         key = Keys.MaternalName.name,
                         value = maternalNameState.value,
+                        leadingIcon = DSInputIcon(iconPerson),
                         displayName = "Apellido materno",
                         label = "Apellido materno",
                         hint = "Escribe tu apellido materno",
